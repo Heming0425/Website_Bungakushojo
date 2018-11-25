@@ -8,12 +8,30 @@ from werkzeug.utils import secure_filename
 # 导入数据库
 from app import app
 from app import db
+from .models import User_log
 
-# 主页
+'''
+登陆注册模块
+'''
+
+
+@app.route('/login')  # 登陆
+def login():
+    pass
+
+
+@app.route('/registered')  # 注册
+def registered():
+    pass
+
+
+'''
+主页
+'''
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index')  # 主页
 def index():
 
     # 轮播区域
@@ -22,9 +40,9 @@ def index():
             'time': '2018-06-01',
             'author': 'Ming1',
             'title': 'titleA',
-            'imag': '../static/images/home/01.jpg',  # 首页轮播图片为url,因此需要提前载入static
-            'href_author': '#',  # 作者主页链接{{url_for()}}
-            'href_blog': '#'  # 文章链接{{url_for()}}
+            'imag': '../static/images/home/01.jpg',
+            'href_author': '#',
+            'href_blog': '#'
         },
         {
             'time': '2018-06-02',
@@ -90,10 +108,21 @@ def index():
         }
     ]
 
-    return render_template('index.html', post_bgs=post_bgs, stand_as=stand_as, audio_as=audio_as)
+    # 网站宣言
+    web = {
+        'quote': '网站宣言',
+        'cite': '大标题'
+    }
+
+    return render_template('index.html', post_bgs=post_bgs, stand_as=stand_as, audio_as=audio_as, web=web)
 
 
-@app.route('/blog/<blog_id>', methods=['GET', 'POST'])
+'''
+文章详情页及提交
+'''
+
+
+@app.route('/view/<blog_id>', methods=['GET', 'POST'])  # 文章详情页
 def blog(blog_id):
 
     if request.method == 'POST':  # 当有留言提交时
@@ -119,7 +148,7 @@ def blog(blog_id):
             'prev_href': '#',
             'next_title': '南锣鼓巷',
             'prev_title': '北京',
-            'style':'format-standard'
+            'style': 'format-standard'
         }
 
         # comment数量
@@ -164,7 +193,7 @@ def blog(blog_id):
             'next_title': '南锣鼓巷',
             'prev_title': '北京',
             'audio': '../static/user_upload/audio/02.mp3',
-            'style':'format-audio'
+            'style': 'format-audio'
         }
 
         # comment数量
@@ -189,12 +218,17 @@ def blog(blog_id):
         # 返回音乐页面
         return render_template('single-audio.html', blog=blog, comment_number=comment_number, comments=comments)
 
-@app.route('/blog/upload')
+
+@app.route('/upload')  # 文章提交页面
 def upload():
-    return 1 #文章提交页面
+    pass
 
-@app.route('/author/<authorname>')
+
+'''
+作者信息展示页面
+'''
+
+
+@app.route('/author/<authorname>')  # 作者详情页面
 def author():
-    return 1 #作者详情页面
-
-
+    return 1
