@@ -1,0 +1,11 @@
+{% extends "standard.html" %}
+{% block standard %}
+<div class="content-media">
+	<div class="post-thumb">
+		<img src="{{blog.author_imag}}">
+	</div>
+	<div class="audio-wrap">
+		<audio id="player2" src="{{blog.audio}}" width="100%" height="42" controls="controls"></audio>
+	</div>
+</div>
+{% endblock %}

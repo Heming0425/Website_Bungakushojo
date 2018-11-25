@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="content-wrap" class="blog-single">
+	<div class="row">
+		<div class="col-twelve">
+				
+			<article class="{{blog.style}}">
+
+				{% block standard %}
+				{% endblock %}
+
+				<div class="primary-content">
+
+					<h1 class="page-title">{{blog.title}}</h1>
+
+					<ul class="entry-meta">
+						<li class="date">{{blog.time}}</li>
+						<li class="cat"><a href="#">{{blog.author}}</a></li>
+					</ul>
+
+					<p class="lead">{{blog.title}}</p>
+
+					<p>{{blog.text}}</p>
+
+					<p class="tags">
+						阅读 {{blog.view}} &nbsp;&nbsp;评论 {{blog.comment}}&nbsp;&nbsp;点赞 {{blog.like}}
+					</p>
+
+					<div class="author-profile">
+						<!--作者头像-->
+						<img src="{{blog.author_imag}}" alt="">
+
+						<div class="about">
+							<h4><a href="#">{{blog.author}}</a></h4>
+
+							<p>{{blog.sign}}</p>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="pagenav group">
+					<div class="prev-nav">
+						<a href="{{blog.prev_href}}" rel="prev">
+							<span>下一篇</span>
+							{{blog.prev_title}}
+						</a>
+					</div>
+					<div class="next-nav">
+						<a href="{{blog.next_href}}" rel="next">
+							<span>上一篇</span>
+							{{blog.next_title}}
+						</a>
+					</div>
+				</div>
+
+			</article>
+
+
+		</div>
+	</div>
+
+	<!--评论区域-->
+	<div class="comments-wrap">
+		<div id="comments" class="row">
+			<div class="col-full">
+
+				<h3>{{comment_number}}条留言</h3>
+
+				<!-- list -->
+				<ol class="commentlist">
+
+					{% for comment in comments %}
+					<li class="depth-1">
+						<!--头像设置-->
+						<div class="avatar">
+							<img width="50" height="50" class="avatar" src="{{comment.author_imag}}" alt="">
+						</div>
+
+						<div class="comment-content">
+
+							<div class="comment-info">
+								<cite>{{comment.author}}</cite>
+
+								<div class="comment-meta">
+									<time class="comment-time">{{comment.time}}</time>
+								</div>
+							</div>
+
+							<div class="comment-text">
+								<p>{{comment.text}}</p>
+							</div>
+
+						</div>
+					</li>
+					{% endfor %}
+
+				</ol>
+
+				<!-- respond -->
+				<div class="respond">
+
+					<h3>留言栏</h3>
+
+					<form name="contactForm" id="contactForm" method="post" action="">
+						<fieldset>
+
+							<div class="message form-field">
+								<textarea name="cMessage" id="cMessage" class="full-width" placeholder="Your Message"></textarea>
+							</div>
+
+							<button type="submit" class="submit button-primary">提交</button>
+
+						</fieldset>
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</section>
+{% endblock %}
