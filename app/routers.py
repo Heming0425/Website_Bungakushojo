@@ -15,14 +15,45 @@ from .models import User_log
 '''
 
 
-@app.route('/login')  # 登陆
+@app.route('/login', methods=['GET','POST'])  # 登陆
 def login():
-    pass
+    if request.method == 'POST':
+        uid = request.form.get('uid')
+        password = request.form.get('password')
+        u_data = User_log.query.filter_by(uid=uid).first()
+        if check_password_hash(u_data.password,password):
+            return '登陆成功'
+        else:
+            return '登录失败'
+    else:
+        return render_template('login.html')
 
 
-@app.route('/registered')  # 注册
+@app.route('/registered', methods=['GET','POST'])  # 注册
 def registered():
-    pass
+    if request.method == 'POST':
+        uid = request.form.get('uid')
+        password = request.form.get('password')
+        # rpassword = request.form.get('rpassword')
+        name = request.form.get('name')
+        email = request.form.get('email')
+
+        password = generate_password_hash(password)  # 密码加密
+
+        user = User_log(
+            uid=uid,
+            password=password,
+            name=name,
+            email=email,
+            register_login = datetime.now()
+        )
+
+        db.session.add(user)  # 向数据库添加用户信息
+        db.session.commit()
+
+        return redirect(url_for('login'))
+    else:
+        return render_template('registered.html')
 
 
 '''
@@ -65,7 +96,7 @@ def index():
             'comment': '20',
             'href_author': '#',
             'href_blog': '#',
-            'imag': '../static/user_upload/images/01.jpg'
+            'imag': '../static/upload/images/01.jpg'
         },
         {
             'time': '2018-06-02',
@@ -76,7 +107,7 @@ def index():
             'comment': '20',
             'href_author': '#',
             'href_blog': '#',
-            'imag': '../static/user_upload/images/02.jpg'
+            'imag': '../static/upload/images/02.jpg'
         }
     ]
 
@@ -91,8 +122,8 @@ def index():
             'comment': '20',
             'href_author': '#',
             'href_blog': '#',
-            'imag': '../static/user_upload/images/03.jpeg',
-            'audio': '../static/user_upload/audio/01.mp3'
+            'imag': '../static/upload/images/03.jpeg',
+            'audio': '../static/upload/audio/01.mp3'
         },
         {
             'time': '2018-06-01',
@@ -103,8 +134,8 @@ def index():
             'comment': '20',
             'href_author': '#',
             'href_blog': '#',
-            'imag': '../static/user_upload/images/04.jpeg',
-            'audio': '../static/user_upload/audio/02.mp3'
+            'imag': '../static/upload/images/04.jpeg',
+            'audio': '../static/upload/audio/02.mp3'
         }
     ]
 
@@ -137,13 +168,13 @@ def blog(blog_id):
         blog = {
             'time': '2018-06-02',
             'author': 'Ming4',
-            'author_imag': '../static/user_upload/images/02.jpg',
+            'author_imag': '../static/upload/images/02.jpg',
             'sign': '幸福生活每一天',
             'title': '这里有非常好吃的东西+1',
             'like': '283',
             'view': '400',
             'comment': '20',
-            'imag': '../static/user_upload/images/02.jpg',
+            'imag': '../static/upload/images/02.jpg',
             'next_href': '#',
             'prev_href': '#',
             'next_title': '南锣鼓巷',
@@ -159,13 +190,13 @@ def blog(blog_id):
             {
                 'author': 'junjie',
                 'text': '太好看了',
-                'author_imag': '../static/user_upload/images/02.jpg',
+                'author_imag': '../static/upload/images/02.jpg',
                 'comment_time': '2018-10-01 PM 7:23'
             },
             {
                 'author': 'junjie',
                 'text': '太好看了',
-                'author_imag': '../static/user_upload/images/02.jpg',
+                'author_imag': '../static/upload/images/02.jpg',
                 'comment_time': '2018-10-01 PM 7:23'
             }
         ]
@@ -181,18 +212,18 @@ def blog(blog_id):
         blog = {
             'time': '2018-06-02',
             'author': 'Ming4',
-            'author_imag': '../static/user_upload/images/02.jpg',
+            'author_imag': '../static/upload/images/02.jpg',
             'sign': '幸福生活每一天',
             'title': '这里有非常好吃的东西+1',
             'like': '283',
             'view': '400',
             'comment': '20',
-            'imag': '../static/user_upload/images/02.jpg',
+            'imag': '../static/upload/images/02.jpg',
             'next_href': '#',
             'prev_href': '#',
             'next_title': '南锣鼓巷',
             'prev_title': '北京',
-            'audio': '../static/user_upload/audio/02.mp3',
+            'audio': '../static/upload/audio/02.mp3',
             'style': 'format-audio'
         }
 
@@ -204,13 +235,13 @@ def blog(blog_id):
             {
                 'author': 'junjie',
                 'text': '太好看了',
-                'author_imag': '../static/user_upload/images/02.jpg',
+                'author_imag': '../static/upload/images/02.jpg',
                 'comment_time': '2018-10-01 PM 7:23'
             },
             {
                 'author': 'junjie',
                 'text': '太好看了',
-                'author_imag': '../static/user_upload/images/02.jpg',
+                'author_imag': '../static/upload/images/02.jpg',
                 'comment_time': '2018-10-01 PM 7:23'
             }
         ]
@@ -219,9 +250,22 @@ def blog(blog_id):
         return render_template('single-audio.html', blog=blog, comment_number=comment_number, comments=comments)
 
 
-@app.route('/upload')  # 文章提交页面
-def upload():
-    pass
+@app.route('/upload',methods=['POST','GET'])  # 文章提交页面
+def user_upload():
+    if request.method == 'POST':
+        # title = request.form.get('title')
+        # # text = request.form.get('text')
+        imag = request.files['imag']
+        audio = request.files['audio']
+        # mp3 = request.files('mp3')
+        basepath = os.path.dirname(__file__)
+        upload_path_imag = os.path.join(basepath,'static/upload/images',secure_filename(imag.filename))
+        upload_path_mp3 = os.path.join(basepath,'static/upload/audio',secure_filename(imag.filename))
+        imag.save(upload_path_imag)
+        audio.save(upload_path_mp3)
+        return '上传成功'
+    else:
+        return render_template('upload.html')
 
 
 '''
@@ -232,3 +276,7 @@ def upload():
 @app.route('/author/<authorname>')  # 作者详情页面
 def author():
     return 1
+
+@app.route('/example')
+def example():
+    return render_template('upload.html')

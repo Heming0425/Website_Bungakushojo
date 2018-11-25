@@ -1,0 +1,54 @@
+{% extends "base_for_log.html" %}
+{% block content %}
+
+<div class="row">
+	<div class="small-12 small-centered medium-8 columns">
+		<div class="panel m-panel shadow">
+			<div class="row collapse">
+				<div class="small-12 columns">
+					<header class="form-header">
+						<h2>登陆&nbsp;&nbsp;<small><a href="{{url_for('registered')}}">我还没有账号</a></small></h2>
+					</header>
+				</div>
+			</div>
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+			{% endif %}
+			{% endwith %}
+			<div class="row">
+				<div class="small-12 columns">
+
+					<form method="POST" accept-charset="utf-8" action="/login">
+						<div class="row">
+							<div class="small-12 columns">
+								<div class="form-group-material">
+									<label class="material-label" for="uid">UID</label>
+									<input class="material-field" name="uid" required="required" type="text" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="small-12 columns">
+								<div class="form-group-material">
+									<label class="material-label" for="password">密码</label>
+									<input class="material-field" name="password" required="required" type="password" />
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="row">
+					<div class="small-12 small-push-5 columns">
+						<button type="submit">提交</button>
+					</div>
+				</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}

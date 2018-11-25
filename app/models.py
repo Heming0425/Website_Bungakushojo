@@ -10,12 +10,14 @@ class User_log(db.Model):
     uid = db.Column(db.String(225),unique=True)
     password = db.Column(db.String(225))
     name = db.Column(db.String(225))
+    email = db.Column(db.String(225))
     register_login = db.Column(db.DateTime()) #注册时间
 
-    def __init__(self, uid, password, name,register_login):
+    def __init__(self, uid, password, name, email, register_login):
         self.uid = uid
         self.password = password
         self.name = name
+        self.email = email
         self.register_login = register_login
     
     def __repr__(self):
