@@ -9,9 +9,11 @@
     <title>主页</title>
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
 
     <!--手机适配-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 
     <!--css-->
     <link rel="stylesheet" href="{{url_for('static',filename='css/base.css')}}">
@@ -41,7 +43,8 @@
 
                         <form enctype='multipart/form-data' id="contactForm" method='POST' action="">
                             <div class="form-field">
-                                <input name="title" type="text" id="Title" class="full-width" placeholder="Title" value="" required='required'>
+                                <input name="title" type="text" id="Title" class="full-width" placeholder="Title" value=""
+                                    required='required'>
                             </div>
                             <div class="message form-field">
                                 <textarea name="text" id="Text" class="full-width" placeholder="Text" required='required'></textarea>

@@ -110,32 +110,31 @@ def index():
 
     posts = zip(post_bgs, post_bgs_author)
 
-    # 标准文章展示
+    # 文章展示
+    post1 = Blog_info.query.filter_by(id='1').first()
+    post2 = Blog_info.query.filter_by(id='2').first()
+    post3 = Blog_info.query.filter_by(id='3').first()
+    post4 = Blog_info.query.filter_by(id='4').first()
+    post5 = Blog_info.query.filter_by(id='5').first()
 
-    # 例子
-    post_stand1 = Blog_info.query.filter_by(id='1').first()
-    post_stand2 = Blog_info.query.filter_by(id='2').first()
-    post_stand = [post_stand1, post_stand2]
+    post_blog = [post1, post2, post3, post4, post5]
 
-    post_stand_author1 = User_info.query.filter_by(
-        uid=post_stand1.user_id).first()
-    post_stand_author2 = User_info.query.filter_by(
-        uid=post_stand2.user_id).first()
-    post_stand_author = [post_stand_author1, post_stand_author2]
+    author1 = User_info.query.filter_by(
+        uid=post1.user_id).first()
+    author2 = User_info.query.filter_by(
+        uid=post2.user_id).first()
+    author3 = User_info.query.filter_by(
+        uid=post3.user_id).first()
+    author4 = User_info.query.filter_by(
+        uid=post4.user_id).first()
+    author5 = User_info.query.filter_by(
+        uid=post5.user_id).first()
 
-    stand_zip = zip(post_stand, post_stand_author)
+    post_author = [author1, author2, author3, author4, author5]
+    
+    blog_zip = zip(post_blog, post_author)
 
-    # 带音乐文章展示
-    post_audio1 = Blog_info.query.filter_by(id='3').first()
-    post_audio = [post_audio1]
-
-    post_audio_author1 = User_info.query.filter_by(
-        uid=post_audio1.user_id).first()
-    post_audio_author = [post_audio_author1]
-
-    audio_zip = zip(post_audio, post_audio_author)
-
-    return render_template('index.html', posts=posts, stand_zip=stand_zip, audio_zip=audio_zip)
+    return render_template('index.html', posts=posts, blog_zip=blog_zip)
 
 
 '''
@@ -145,39 +144,39 @@ def index():
 
 @app.route('/view/<blog_id>', methods=['GET', 'POST'])  # 文章详情页
 def view(blog_id):
-    
+
     # 验证session
     try:
         uid = session['uid']
     except:
         flash('请先登陆')
         return render_template('login.html', flash=flash)
-    
+
     if request.method == 'POST':  # 当有留言提交时
         comment = request.form.get('comment')
         c = Comment_info(
-            comment = comment,
-            blog_id = blog_id,
-            user_id = session['uid'],
-            upload_time = datetime.now()
+            comment=comment,
+            blog_id=blog_id,
+            user_id=session['uid'],
+            upload_time=datetime.now()
         )
         db.session.add(c)  # 向数据库添加用户信息
         db.session.commit()
-    
-    
+
     # 获取comment
     comments = Comment_info.query.filter_by(blog_id=blog_id).all()
 
     authors = []
     if comments is not None:
         for comment in comments:
-            authors.append(User_info.query.filter_by(uid=comment.user_id).first())
-    
+            authors.append(User_info.query.filter_by(
+                uid=comment.user_id).first())
+
     comment_zip = zip(comments, authors)
 
     # comment数量
     comment_number = len(comments)
-    
+
     blog_data = Blog_info.query.filter_by(id=blog_id).first()  # 获取文章信息
     author_data = User_info.query.filter_by(
         uid=blog_data.user_id).first()  # 获取文章对应的author信息

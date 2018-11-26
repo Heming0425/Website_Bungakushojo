@@ -6,6 +6,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="{{url_for('static',filename='css/main_person.css')}}" />
+	<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
 
 </head>
 
@@ -44,7 +45,6 @@
 					<br>
 					<ul class="feature-icons">
 						<li class="fa-coffee">{{author.uid}}</li>
-						<li class="fa-users">{{author.birth}}</li>
 						<li class="fa-bolt">{{author.email}}</li>
 					</ul>
 				</div>
@@ -58,8 +58,9 @@
 						{% for blog in blogs %}
 						<article>
 							<a href="{{url_for('view',blog_id=blog.id)}}" class="image"><img src="{{url_for('static',filename=blog.imag)}}" alt="" /></a>
-							<div class="inner">
+							<div class="inner" style="word-wrap:break-word">
 								<a href="{{url_for('view',blog_id=blog.id)}}"><h4>{{blog.title}}</h4></a>
+								<p>{{blog.text | truncate(length=100)}}</p>
 							</div>
 						</article>
 						{% endfor %}
@@ -98,7 +99,7 @@
 			<section id="footer">
 				<div class="container">
 					<ul class="copyright">
-						<li>&copy; XXXXXXXX</li>
+						<li>&copy; 「文学少女」主题站</li>
 					</ul>
 				</div>
 			</section>

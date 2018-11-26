@@ -1,11 +1,14 @@
 @import url("font-awesome.min.css");
 @import url("http://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
 
+
 /*
 	Read Only by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+
+
+	*/
 
 /* Reset */
 
@@ -2092,7 +2095,7 @@
 				}
 
 				ul.feature-icons li:before {
-					background: #4acaa8;
+					background: #839691;
 					border-radius: 100%;
 					color: #ffffff;
 					display: block;
@@ -2461,7 +2464,7 @@
 		-webkit-justify-content: space-between;
 		-ms-justify-content: space-between;
 		justify-content: space-between;
-		background: #4acaa8;
+		background: rgb(51,78,118);
 		color: #d1f1e9;
 		height: 100%;
 		overflow-y: auto;
@@ -2550,7 +2553,7 @@
 			}
 
 				#header > nav ul li {
-					border-top: solid 2px #5ccfb0;
+					border-top: solid 2px #888;
 					display: block;
 					padding: 0;
 				}
@@ -2569,7 +2572,7 @@
 
 						#header > nav ul li a.active {
 							background: #fff;
-							color: #4acaa8 !important;
+							color: #4c655e !important;
 						}
 
 					#header > nav ul li:first-child {

@@ -1560,7 +1560,6 @@ input::-moz-focus-inner {
  * ------------------------------------------------------------------- */
 header {
 	width: 100%;
-	background: #DBDBDB url(../images/escheresque_@2X.png) repeat;
 	background-size: 46px 29px;
 	height: 130px;
 	border-bottom: 1px solid #E5E5E5;
@@ -1721,7 +1720,7 @@ header .logo a {
 
 .main-navigation li a {
 	display: block;
-	padding-bottom: 9px;
+	padding-bottom: 0px;
 	color: #898989;
 	border: none;
 }
@@ -1817,7 +1816,7 @@ header .logo a {
 		top: 50%;
 		right: 45px;
 		font-size: 21px;
-		margin-top: 5px;
+		margin-top: 2px;
 		display: block;
 		height: 3rem;
 		line-height: 3rem;
