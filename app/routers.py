@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 # 导入数据库
 from app import app
 from app import db
-from .models import User_info, Blog_info
+from .models import User_info, Blog_info, Comment_info
 
 '''
 登陆注册模块
@@ -64,6 +64,8 @@ def registered():
             password=password,
             name=name,
             email=email,
+            sign='这个人什么也没留下Orz',  # 注册时默认
+            icon='upload/icon/default.jpg',
             register_login=datetime.now()
         )
 
@@ -91,87 +93,49 @@ def index():
         flash('请先登陆')
         return render_template('login.html', flash=flash)
 
-    # 轮播区域
-    post_bgs = [
-        {
-            'time': '2018-06-01',
-            'author': 'Ming1',
-            'title': 'titleA',
-            'imag': '../static/images/home/01.jpg',
-            'href_author': "http://127.0.0.1:5000/author/sadasd#four",  # 实现跳转
-            'href_blog': '#'
-        },
-        {
-            'time': '2018-06-02',
-            'author': 'Ming2',
-            'title': 'titleB',
-            'imag': '../static/images/home/02.jpg',
-            'href_author': '#',
-            'href_blog': '#'
-        }
-    ]
+    # 轮播设置
+
+    post_bg1 = Blog_info.query.filter_by(id='1').first()
+    post_bg2 = Blog_info.query.filter_by(id='2').first()
+    post_bg3 = Blog_info.query.filter_by(id='3').first()
+    post_bg4 = Blog_info.query.filter_by(id='4').first()
+    post_bgs = [post_bg1, post_bg2, post_bg3, post_bg4]
+
+    post_bg1_author = User_info.query.filter_by(uid=post_bg1.user_id).first()
+    post_bg2_author = User_info.query.filter_by(uid=post_bg2.user_id).first()
+    post_bg3_author = User_info.query.filter_by(uid=post_bg3.user_id).first()
+    post_bg4_author = User_info.query.filter_by(uid=post_bg4.user_id).first()
+    post_bgs_author = [post_bg1_author, post_bg2_author,
+                       post_bg3_author, post_bg4_author]
+
+    posts = zip(post_bgs, post_bgs_author)
 
     # 标准文章展示
-    stand_as = [
-        {
-            'time': '2018-06-01',
-            'author': 'Ming3',
-            'title': '这里有非常好吃的东西',
-            'like': '283',
-            'view': '400',
-            'comment': '20',
-            'href_author': '#',
-            'href_blog': '#',
-            'imag': '../static/upload/images/01.jpg'
-        },
-        {
-            'time': '2018-06-02',
-            'author': 'Ming4',
-            'title': '这里有非常好吃的东西+1',
-            'like': '283',
-            'view': '400',
-            'comment': '20',
-            'href_author': '#',
-            'href_blog': '#',
-            'imag': '../static/upload/images/02.jpg'
-        }
-    ]
+
+    # 例子
+    post_stand1 = Blog_info.query.filter_by(id='1').first()
+    post_stand2 = Blog_info.query.filter_by(id='2').first()
+    post_stand = [post_stand1, post_stand2]
+
+    post_stand_author1 = User_info.query.filter_by(
+        uid=post_stand1.user_id).first()
+    post_stand_author2 = User_info.query.filter_by(
+        uid=post_stand2.user_id).first()
+    post_stand_author = [post_stand_author1, post_stand_author2]
+
+    stand_zip = zip(post_stand, post_stand_author)
 
     # 带音乐文章展示
-    audio_as = [
-        {
-            'time': '2018-06-01',
-            'author': 'Ming3',
-            'title': '这里有非常好吃的东西',
-            'like': '283',
-            'view': '400',
-            'comment': '20',
-            'href_author': '#',
-            'href_blog': '#',
-            'imag': '../static/upload/images/03.jpeg',
-            'audio': '../static/upload/audio/01.mp3'
-        },
-        {
-            'time': '2018-06-01',
-            'author': 'Ming3',
-            'title': '这里有非常好吃的东西',
-            'like': '283',
-            'view': '400',
-            'comment': '20',
-            'href_author': '#',
-            'href_blog': '#',
-            'imag': '../static/upload/images/04.jpeg',
-            'audio': '../static/upload/audio/02.mp3'
-        }
-    ]
+    post_audio1 = Blog_info.query.filter_by(id='3').first()
+    post_audio = [post_audio1]
 
-    # 网站宣言
-    web = {
-        'quote': '网站宣言',
-        'cite': '大标题'
-    }
+    post_audio_author1 = User_info.query.filter_by(
+        uid=post_audio1.user_id).first()
+    post_audio_author = [post_audio_author1]
 
-    return render_template('index.html', post_bgs=post_bgs, stand_as=stand_as, audio_as=audio_as, web=web)
+    audio_zip = zip(post_audio, post_audio_author)
+
+    return render_template('index.html', posts=posts, stand_zip=stand_zip, audio_zip=audio_zip)
 
 
 '''
@@ -180,100 +144,54 @@ def index():
 
 
 @app.route('/view/<blog_id>', methods=['GET', 'POST'])  # 文章详情页
-def blog(blog_id):
-
+def view(blog_id):
+    
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+    
     if request.method == 'POST':  # 当有留言提交时
-        pass  # 存入数据库
+        comment = request.form.get('comment')
+        c = Comment_info(
+            comment = comment,
+            blog_id = blog_id,
+            user_id = session['uid'],
+            upload_time = datetime.now()
+        )
+        db.session.add(c)  # 向数据库添加用户信息
+        db.session.commit()
+    
+    
+    # 获取comment
+    comments = Comment_info.query.filter_by(blog_id=blog_id).all()
 
-    # 获取blog_id的type
-    blog_type = 2
+    authors = []
+    if comments is not None:
+        for comment in comments:
+            authors.append(User_info.query.filter_by(uid=comment.user_id).first())
+    
+    comment_zip = zip(comments, authors)
 
-    if blog_type == 1:  # 标准文章格式
+    # comment数量
+    comment_number = len(comments)
+    
+    blog_data = Blog_info.query.filter_by(id=blog_id).first()  # 获取文章信息
+    author_data = User_info.query.filter_by(
+        uid=blog_data.user_id).first()  # 获取文章对应的author信息
 
-        # 获取blog
-        blog = {
-            'time': '2018-06-02',
-            'author': 'Ming4',
-            'author_imag': '../static/upload/images/02.jpg',
-            'sign': '幸福生活每一天',
-            'title': '这里有非常好吃的东西+1',
-            'like': '283',
-            'view': '400',
-            'comment': '20',
-            'imag': '../static/upload/images/02.jpg',
-            'next_href': '#',
-            'prev_href': '#',
-            'next_title': '南锣鼓巷',
-            'prev_title': '北京',
+    if blog_data.blog_type == 1:  # 标准文章格式
+        view = {
             'style': 'format-standard'
         }
-
-        # comment数量
-        comment_number = '5'
-
-        # 获取comment
-        comments = [
-            {
-                'author': 'junjie',
-                'text': '太好看了',
-                'author_imag': '../static/upload/images/02.jpg',
-                'comment_time': '2018-10-01 PM 7:23'
-            },
-            {
-                'author': 'junjie',
-                'text': '太好看了',
-                'author_imag': '../static/upload/images/02.jpg',
-                'comment_time': '2018-10-01 PM 7:23'
-            }
-        ]
-
-        # 返回标准页面
-        return render_template('single-standard.html', blog=blog, comment_number=comment_number, comments=comments)
-
-    # blog_type == 2
-    # 音乐文章格式
-    else:
-
-        # 获取blog
-        blog = {
-            'time': '2018-06-02',
-            'author': 'Ming4',
-            'author_imag': '../static/upload/images/02.jpg',
-            'sign': '幸福生活每一天',
-            'title': '这里有非常好吃的东西+1',
-            'like': '283',
-            'view': '400',
-            'comment': '20',
-            'imag': '../static/upload/images/02.jpg',
-            'next_href': '#',
-            'prev_href': '#',
-            'next_title': '南锣鼓巷',
-            'prev_title': '北京',
-            'audio': '../static/upload/audio/02.mp3',
+        return render_template('single-standard.html', blog=blog_data, comment_number=comment_number, comment_zip=comment_zip, author=author_data, view=view)
+    else:  # 音乐文章格式
+        view = {
             'style': 'format-audio'
         }
-
-        # comment数量
-        comment_number = '5'
-
-        # 获取comment
-        comments = [
-            {
-                'author': 'junjie',
-                'text': '太好看了',
-                'author_imag': '../static/upload/images/02.jpg',
-                'comment_time': '2018-10-01 PM 7:23'
-            },
-            {
-                'author': 'junjie',
-                'text': '太好看了',
-                'author_imag': '../static/upload/images/02.jpg',
-                'comment_time': '2018-10-01 PM 7:23'
-            }
-        ]
-
-        # 返回音乐页面
-        return render_template('single-audio.html', blog=blog, comment_number=comment_number, comments=comments)
+        return render_template('single-audio.html', blog=blog_data, comment_number=comment_number, comment_zip=comment_zip, author=author_data, view=view)
 
 
 @app.route('/upload', methods=['POST', 'GET'])  # 文章提交页面
@@ -303,7 +221,7 @@ def user_upload():
             basepath, 'static/upload/images', secure_filename(imag.filename))  # 文件存入服务器
         imag.save(upload_path_imag)
         upload_path_imag = os.path.join(
-            'upload/audio', secure_filename(imag.filename))  # 路径存入数据库
+            'upload/images', secure_filename(imag.filename))  # 路径存入数据库
 
         # 是否上传音乐
         try:
@@ -341,8 +259,31 @@ def user_upload():
 '''
 
 
-@app.route('/author/<authoruid>')  # 作者信息展示页面
+@app.route('/author/<authoruid>', methods=['GET', 'POST'])  # 作者信息展示页面
 def author(authoruid):
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        sign = request.form.get('sign')
+        icon = request.files['icon']
+
+        # 上传基本路径
+        basepath = os.path.dirname(__file__)
+
+        # 上传作者头像
+        upload_path_icon = os.path.join(
+            basepath, 'static/upload/icon', secure_filename(icon.filename))  # 文件存入服务器
+        icon.save(upload_path_icon)
+        upload_path_icon = os.path.join(
+            'upload/icon', secure_filename(icon.filename))
+        User_info.query.filter_by(uid=session['uid']).update({  # 更新
+            'name': name,
+            'email': email,
+            'sign': sign,
+            'icon': upload_path_icon
+        })
+        db.session.commit()
 
     # 验证登陆
     # 验证当前用户是否匹配以显示change
@@ -354,8 +295,10 @@ def author(authoruid):
         return render_template('login.html')
     if uid == authoruid:
         change = 1
-        
+
     u_data = User_info.query.filter_by(uid=authoruid).first()
     blogs = Blog_info.query.filter_by(user_id=authoruid).all()
+
     # 验证u_data
-    return render_template('author_info.html', author=u_data, blogs=blogs,change=change) #前端检验blogs
+    # 前端检验blogs
+    return render_template('author_info.html', author=u_data, blogs=blogs, change=change)

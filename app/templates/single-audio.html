@@ -2,10 +2,10 @@
 {% block standard %}
 <div class="content-media">
 	<div class="post-thumb">
-		<img src="{{blog.author_imag}}">
+		<img src="{{url_for('static',filename=blog.imag)}}">
 	</div>
 	<div class="audio-wrap">
-		<audio id="player2" src="{{blog.audio}}" width="100%" height="42" controls="controls"></audio>
+		<audio id="player2" src="{{url_for('static',filename=blog.audio)}}" width="100%" height="42" controls="controls"></audio>
 	</div>
 </div>
 {% endblock %}

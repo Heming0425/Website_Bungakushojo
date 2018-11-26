@@ -13,7 +13,7 @@
 
 	<section id="header">
 		<header>
-			<span class="image avatar"><img src="{{url_for('static',filename='images/avatar.jpg')}}" alt="" /></span>
+			<span class="image avatar"><img src="{{url_for('static',filename=author.icon)}}" alt="" /></span>
 			<h1 id="logo">{{author.name}}</h1>
 		</header>
 		<nav id="nav">
@@ -57,10 +57,9 @@
 					<div class="features">
 						{% for blog in blogs %}
 						<article>
-							<a href="{{url_for('index')}}" class="image"><img src="{{url_for('static',filename='images/pic01.jpg')}}" alt="" /></a>
+							<a href="{{url_for('view',blog_id=blog.id)}}" class="image"><img src="{{url_for('static',filename=blog.imag)}}" alt="" /></a>
 							<div class="inner">
-								<h4>{{blog.title}}</h4>
-								<p>{{blog.text}}</p>
+								<a href="{{url_for('view',blog_id=blog.id)}}"><h4>{{blog.title}}</h4></a>
 							</div>
 						</article>
 						{% endfor %}
@@ -72,14 +71,18 @@
 			<section id="four">
 				<div class="container">
 					<h3>Change</h3>
-					<form method="post" action="#">
+					<form method="post" action="#" enctype='multipart/form-data'>
 						<div class="row uniform">
 							<div class="6u 12u(xsmall)"><input type="text" name="name" id="name" placeholder="昵称" /></div>
 							<div class="6u 12u(xsmall)"><input type="email" name="email" id="email" placeholder="Email" /></div>
 						</div>
 						<div class="row uniform">
-							<div class="12u"><textarea name="message" id="message" placeholder="Sign" rows="6"></textarea></div>
+							<div class="12u"><textarea name="sign" id="message" placeholder="Sign" rows="6"></textarea></div>
 						</div>
+						<div class="row uniform">
+							<div class="12u"><input type="file" name="icon"></div>
+						</div>
+
 						<div class="row uniform">
 							<div class="12u">
 								<ul class="actions">
