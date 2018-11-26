@@ -94,45 +94,24 @@ def index():
         return render_template('login.html', flash=flash)
 
     # 轮播设置
-
-    post_bg1 = Blog_info.query.filter_by(id='1').first()
-    post_bg2 = Blog_info.query.filter_by(id='2').first()
-    post_bg3 = Blog_info.query.filter_by(id='3').first()
-    post_bg4 = Blog_info.query.filter_by(id='4').first()
-    post_bgs = [post_bg1, post_bg2, post_bg3, post_bg4]
-
-    post_bg1_author = User_info.query.filter_by(uid=post_bg1.user_id).first()
-    post_bg2_author = User_info.query.filter_by(uid=post_bg2.user_id).first()
-    post_bg3_author = User_info.query.filter_by(uid=post_bg3.user_id).first()
-    post_bg4_author = User_info.query.filter_by(uid=post_bg4.user_id).first()
-    post_bgs_author = [post_bg1_author, post_bg2_author,
-                       post_bg3_author, post_bg4_author]
-
+    post_bgs = []
+    post_bgs_author = []
+    for i in range(1,5):
+        post_bg = Blog_info.query.filter_by(id=i).first()
+        post_bg_author = User_info.query.filter_by(uid=post_bg.user_id).first()
+        post_bgs.append(post_bg)
+        post_bgs_author.append(post_bg_author)
     posts = zip(post_bgs, post_bgs_author)
 
     # 文章展示
-    post1 = Blog_info.query.filter_by(id='1').first()
-    post2 = Blog_info.query.filter_by(id='2').first()
-    post3 = Blog_info.query.filter_by(id='3').first()
-    post4 = Blog_info.query.filter_by(id='4').first()
-    post5 = Blog_info.query.filter_by(id='5').first()
-
-    post_blog = [post1, post2, post3, post4, post5]
-
-    author1 = User_info.query.filter_by(
-        uid=post1.user_id).first()
-    author2 = User_info.query.filter_by(
-        uid=post2.user_id).first()
-    author3 = User_info.query.filter_by(
-        uid=post3.user_id).first()
-    author4 = User_info.query.filter_by(
-        uid=post4.user_id).first()
-    author5 = User_info.query.filter_by(
-        uid=post5.user_id).first()
-
-    post_author = [author1, author2, author3, author4, author5]
-    
-    blog_zip = zip(post_blog, post_author)
+    post_blogs = []
+    post_blogs_author = []
+    for i in range(1,6):
+        post_blog = Blog_info.query.filter_by(id=i).first()
+        author = User_info.query.filter_by(uid=post_blog.user_id).first()
+        post_blogs.append(post_blog)
+        post_blogs_author.append(author)
+    blog_zip = zip(post_blogs, post_blogs_author)
 
     return render_template('index.html', posts=posts, blog_zip=blog_zip)
 
