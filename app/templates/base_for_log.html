@@ -10,6 +10,16 @@
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/normalize.css')}}" />
 	<link rel="stylesheet prefetch" href="{{url_for('static',filename='css/foundation.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/styles.css')}}">
+
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	{% for message in messages %}
+	<script type="text/javascript">
+		alert('{{message}}')
+	</script>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
 </head>
 
 <body>
@@ -17,24 +27,24 @@
 	{% block content %}{% endblock %}
 	<script src="{{url_for('static',filename='js/jquery.min.js')}}" type="text/javascript"></script>
 	<script>
-		(function () {
-			var materialForm;
-			materialForm = function () {
-				return $('.material-field').focus(function () {
-					return $(this).closest('.form-group-material').addClass('focused has-value');
-				}).focusout(function () {
-					return $(this).closest('.form-group-material').removeClass('focused');
-				}).blur(function () {
-					if (!this.value) {
-						$(this).closest('.form-group-material').removeClass('has-value');
-					}
-					return $(this).closest('.form-group-material').removeClass('focused');
+			(function () {
+				var materialForm;
+				materialForm = function () {
+					return $('.material-field').focus(function () {
+						return $(this).closest('.form-group-material').addClass('focused has-value');
+					}).focusout(function () {
+						return $(this).closest('.form-group-material').removeClass('focused');
+					}).blur(function () {
+						if (!this.value) {
+							$(this).closest('.form-group-material').removeClass('has-value');
+						}
+						return $(this).closest('.form-group-material').removeClass('focused');
+					});
+				};
+				$(function () {
+					return materialForm();
 				});
-			};
-			$(function () {
-				return materialForm();
-			});
-		}.call(this));
+			}.call(this));
 	</script>
 </body>
 

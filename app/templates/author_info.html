@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>{{author.name}}</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="{{url_for('static',filename='css/main_person.css')}}" />
+
+</head>
+
+<body>
+
+	<section id="header">
+		<header>
+			<span class="image avatar"><img src="{{url_for('static',filename='images/avatar.jpg')}}" alt="" /></span>
+			<h1 id="logo">{{author.name}}</h1>
+		</header>
+		<nav id="nav">
+			<ul>
+				<li><a href="#one" class="active">Sign</a></li>
+				<li><a href="#two">About</a></li>
+				<li><a href="#three">Myblog</a></li>
+				{% if change %}
+				<li><a href="#four">Change</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</section>
+
+	<div id="wrapper">
+		<div id="main">
+			<section id="one">
+				<div class="container">
+					<h3>Sign</h3>
+					<br>
+					<p>{{author.sign}}</p>
+				</div>
+			</section>
+
+			<section id="two">
+				<div class="container">
+					<h3>About</h3>
+					<br>
+					<ul class="feature-icons">
+						<li class="fa-coffee">{{author.uid}}</li>
+						<li class="fa-users">{{author.birth}}</li>
+						<li class="fa-bolt">{{author.email}}</li>
+					</ul>
+				</div>
+			</section>
+
+			<section id="three">
+				<div class="container">
+					<h3>Myblog</h3>
+					<br>
+					<div class="features">
+						{% for blog in blogs %}
+						<article>
+							<a href="{{url_for('index')}}" class="image"><img src="{{url_for('static',filename='images/pic01.jpg')}}" alt="" /></a>
+							<div class="inner">
+								<h4>{{blog.title}}</h4>
+								<p>{{blog.text}}</p>
+							</div>
+						</article>
+						{% endfor %}
+	
+					</div>
+				</div>
+			</section>
+			{% if change %}
+			<section id="four">
+				<div class="container">
+					<h3>Change</h3>
+					<form method="post" action="#">
+						<div class="row uniform">
+							<div class="6u 12u(xsmall)"><input type="text" name="name" id="name" placeholder="昵称" /></div>
+							<div class="6u 12u(xsmall)"><input type="email" name="email" id="email" placeholder="Email" /></div>
+						</div>
+						<div class="row uniform">
+							<div class="12u"><textarea name="message" id="message" placeholder="Sign" rows="6"></textarea></div>
+						</div>
+						<div class="row uniform">
+							<div class="12u">
+								<ul class="actions">
+									<li><input type="submit" class="special" value="Submit" /></li>
+									<li><input type="reset" value="Reset Form" /></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+			{% endif %}
+			<section id="footer">
+				<div class="container">
+					<ul class="copyright">
+						<li>&copy; XXXXXXXX</li>
+					</ul>
+				</div>
+			</section>
+
+		</div>
+
+		<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="{{url_for('static',filename='js/jquery.scrollzer.min.js')}}"></script>
+		<script src="{{url_for('static',filename='js/jquery.scrolly.min.js')}}"></script>
+		<script src="{{url_for('static',filename='js/skel.min.js')}}"></script>
+		<script src="{{url_for('static',filename='js/util.js')}}"></script>
+		<script src="{{url_for('static',filename='js/main_person.js')}}"></script>
+
+</body>
+
+</html>

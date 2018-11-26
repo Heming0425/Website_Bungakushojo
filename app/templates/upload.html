@@ -41,13 +41,13 @@
 
                         <form enctype='multipart/form-data' id="contactForm" method='POST' action="">
                             <div class="form-field">
-                                <input name="title" type="text" id="Title" class="full-width" placeholder="Title" value="">
+                                <input name="title" type="text" id="Title" class="full-width" placeholder="Title" value="" required='required'>
                             </div>
                             <div class="message form-field">
-                                <textarea name="text" id="Text" class="full-width" placeholder="Text"></textarea>
+                                <textarea name="text" id="Text" class="full-width" placeholder="Text" required='required'></textarea>
                             </div>
                             <div class="form-field">
-                                <input name="imag" type="file" class="submit button-primary">
+                                <input name="imag" type="file" class="submit button-primary" required='required'>
                             </div>
                             <div class="form-field">
                                 <input name="audio" type="file" class="submit button-primary">
