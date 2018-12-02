@@ -288,6 +288,7 @@ def blog_markdown():
         blog_markdown = request.form.get('basic-editormd-html-code')
         upload_time = datetime.now()
         blog_type = 1
+        blog_timeid=datetime.now().strftime('%Y%m%d%H%M%S')
 
         # imag
         imag = request.files['imag']
@@ -315,14 +316,16 @@ def blog_markdown():
             imag=imag,
             audio=audio,
             blog_type=blog_type,
-            blog_timeid=datetime.now().strftime('%Y%m%d%H%M%S'),
+            blog_timeid=blog_timeid,
             upload_time=upload_time,
             user_id=uid
         )
 
         db.session.add(blog)
         db.session.commit()
-        return redirect('index')
+
+        blog = Blog_info.query.filter_by(blog_timeid=blog_timeid).first()
+        return redirect(url_for('view',blog_id=blog.id))
     else:
         return render_template('markdown.html')
 
