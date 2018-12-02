@@ -18,7 +18,9 @@
 						<li class="cat"><a href="{{url_for('author',authoruid=author.uid)}}">{{author.name}}</a></li>
 					</ul>
 
-					<p class="lead">{{blog.text}}</p>
+					<!--markdown-->
+					{{blog.blog_markdown|safe}}
+			
 
 					<!--
 					<p class="tags">
@@ -123,3 +125,20 @@
 
 </section>
 {% endblock %}
+
+<!--
+
+	markdown 前台
+
+
+		<script type="text/javascript">
+		function compile() {
+			var converter = new showdown.Converter();
+			var html = converter.makeHtml({{blog.text}});
+			document.getElementById("showtext").innerHTML = html;
+		}
+	</script>
+
+
+
+-->

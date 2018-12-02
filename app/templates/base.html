@@ -24,7 +24,15 @@
 	<!--js-->
 	<script src="{{url_for('static',filename='js/modernizr.js')}}"></script>
 	<script src="{{url_for('static',filename='js/pace.min.js')}}"></script>
-
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	{% for message in messages %}
+	<script type="text/javascript">
+		alert('{{message}}')
+	</script>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
 
 </head>
 
@@ -51,7 +59,7 @@
 						</ul>
 					</li>
 					<li class="has-children">
-						<a href="{{url_for('user_upload')}}">上传三题故事</a>
+						<a href="{{url_for('blog_markdown')}}">上传三题故事</a>
 					</li>
 					<li><a href="{{url_for('author',authoruid=session['uid'])}}">个人主页</a></li>
 				</ul>
@@ -63,10 +71,10 @@
 			<!--搜索框展开-->
 			<div class="search-wrap">
 
-				<form role="search" method="get" class="search-form" action="#">
+				<form role="search" method="get" class="search-form" action="/index/search">
 					<label>
 						<span class="hide-content">Search for:</span>
-						<input type="search" class="search-field" placeholder="Type Your Keywords" value="" name="s" title="Search for:"
+						<input type="search" class="search-field" placeholder="Type Your Keywords" value="" name="search_info" title="Search for:"
 						 autocomplete="off">
 					</label>
 					<input type="submit" class="search-submit" value="Search">
@@ -149,7 +157,6 @@
 	<script src="{{url_for('static',filename='js/plugins.js')}}"></script>
 	<script src="{{url_for('static',filename='js/jquery.appear.js')}}"></script>
 	<script src="{{url_for('static',filename='js/main.js')}}"></script>
-
 </body>
 
 </html>

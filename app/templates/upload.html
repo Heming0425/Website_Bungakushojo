@@ -26,6 +26,8 @@
     <script src="{{url_for('static',filename='js/modernizr.js')}}"></script>
     <script src="{{url_for('static',filename='js/pace.min.js')}}"></script>
 
+    <!--markdown-->
+    <link rel="stylesheet" href="{{url_for('static',filename='editormd/css/editormd.css')}}" />
 
 </head>
 
@@ -49,6 +51,7 @@
                             <div class="message form-field">
                                 <textarea name="text" id="Text" class="full-width" placeholder="Text" required='required'></textarea>
                             </div>
+                            <div id="basic-editormd"></div>
                             <div class="form-field">
                                 <input name="imag" type="file" class="submit button-primary" required='required'>
                             </div>
@@ -70,6 +73,27 @@
     <script src="{{url_for('static',filename='js/plugins.js')}}"></script>
     <script src="{{url_for('static',filename='js/jquery.appear.js')}}"></script>
     <script src="{{url_for('static',filename='js/main.js')}}"></script>
+
+    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
+    <script>
+        var testEditor;
+        $(function () {
+            testEditor = editormd("basic-editormd", {
+                width: '100%',
+                height: '540',
+                syncScrolling: "single",
+                path: "{{url_for('static',filename='editormd/lib/')}}",
+                imageUpload: true,
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: "{{url_for('index')}}",
+                // 设置markdown功能栏
+                toolbarIcons: function () {
+                    return ["undo", "redo", "|", "bold", "hr", "italic", "del", "|", "h1", "h2", "h3", "h4", "h5", "|", "image"]
+                },
+            });
+        })
+    </script>
 </body>
 
 </html>

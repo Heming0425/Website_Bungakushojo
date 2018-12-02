@@ -7,7 +7,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="{{url_for('static',filename='css/main_person.css')}}" />
 	<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
-
+	<style type="text/css">
+	img{
+		max-width: 50%
+	}
+	</style>
 </head>
 
 <body>
@@ -60,7 +64,7 @@
 							<a href="{{url_for('view',blog_id=blog.id)}}" class="image"><img src="{{url_for('static',filename=blog.imag)}}" alt="" /></a>
 							<div class="inner" style="word-wrap:break-word">
 								<a href="{{url_for('view',blog_id=blog.id)}}"><h4>{{blog.title}}</h4></a>
-								<p>{{blog.text | truncate(length=100)}}</p>
+								{{blog.blog_markdown | safe | truncate(length=100)}}
 							</div>
 						</article>
 						{% endfor %}
@@ -74,8 +78,8 @@
 					<h3>Change</h3>
 					<form method="post" action="#" enctype='multipart/form-data'>
 						<div class="row uniform">
-							<div class="6u 12u(xsmall)"><input type="text" name="name" id="name" placeholder="昵称" /></div>
-							<div class="6u 12u(xsmall)"><input type="email" name="email" id="email" placeholder="Email" /></div>
+							<div class="6u 12u(xsmall)"><input type="text" name="name" id="name" placeholder="昵称"/></div>
+							<div class="6u 12u(xsmall)"><input type="email" name="email" id="email" placeholder="Email"/></div>
 						</div>
 						<div class="row uniform">
 							<div class="12u"><textarea name="sign" id="message" placeholder="Sign" rows="6"></textarea></div>
@@ -83,7 +87,6 @@
 						<div class="row uniform">
 							<div class="12u"><input type="file" name="icon"></div>
 						</div>
-
 						<div class="row uniform">
 							<div class="12u">
 								<ul class="actions">

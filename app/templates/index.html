@@ -76,7 +76,7 @@
 						</div>
 
 						<h1 class="entry-title"><a href="{{url_for('view',blog_id=blog_data.id)}}">{{blog_data.title}}</a></h1>
-						<p>{{blog_data.text | truncate(length=75)}}</p>
+						<p>{{blog_data.blog_markdown | safe | truncate(length=75)}}</p>
 
 					</div>
 					<div class="entry-excerpt">

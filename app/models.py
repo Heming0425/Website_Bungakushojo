@@ -34,21 +34,23 @@ class Blog_info(db.Model): #博客信息表
     __tablename__ = 'blog_info'
     id = db.Column(db.Integer, primary_key=True,unique=True)
     title = db.Column(db.String(225))
-    text = db.Column(LONGTEXT)
+    blog_markdown = db.Column(db.Text)
     imag = db.Column(db.String(225))
     audio = db.Column(db.String(225))
     blog_type = db.Column(db.Integer)
     upload_time = db.Column(db.DateTime())
+    blog_timeid = db.Column(db.String(225))
     user_id = db.Column(db.String(225), db.ForeignKey('user_info.uid'))
 
-    def __init__(self, title, text, imag, audio, blog_type,upload_time, user_id):
+    def __init__(self, title, blog_markdown, imag, audio, blog_type,upload_time,blog_timeid, user_id):
         self.title = title
-        self.text = text
+        self.blog_markdown = blog_markdown
         self.imag = imag
         self.audio = audio
         self.blog_type = blog_type
         self.user_id = user_id
         self.upload_time = upload_time
+        self.blog_timeid = blog_timeid
 
     def __repr__(self):
         return "<blog id '{}'>".format(self.id)
@@ -70,3 +72,4 @@ class Comment_info(db.Model):
     
     def __repr__(self):
         return "<comment id '{}'>".format(self.id)
+

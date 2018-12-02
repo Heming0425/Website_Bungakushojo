@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{url_for('static',filename='editormd/css/editormd.css')}}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/fileinput.css')}}" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <style type="text/css">
+        .btn {
+            font-size: 1.55rem;
+            background-color: #7f7f7f;
+            border-color: #7f7f7f
+        }
+    </style>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <script type="text/javascript">
+        alert('{{message}}')
+    </script>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</head>
+
+<body>
+
+    <div class="col-md-8 offset-md-2">
+        <form enctype='multipart/form-data' id='blog_markdown' method='POST' action="">
+            <br />
+            <div>
+                <input name='title' type="text" required='required' placeholder="请在这里键入您的标题" class="form-control">
+            </div>
+            <br />
+            <div id="basic-editormd"></div>
+            <div>
+                <p>请在这里选择您的封面「required」</p>
+                <input name='imag' class="file" type="file" required='required' multiple data-min-file-count="1">
+            </div>
+            <br />
+            <div>
+                <p>请在这里选择您的背景音乐「suggest」</p>
+                <input name='audio' class="file" type="file" multiple data-min-file-count="1">
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="{{url_for('static',filename='js/fileinput.js')}}" type="text/javascript"></script>
+    <script src="{{url_for('static',filename='js/fileinput_locale_zh.js')}}" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
+    <script>
+        var testEditor;
+        $(function () {
+            testEditor = editormd("basic-editormd", {
+                width: '100%',
+                height: '540',
+                syncScrolling: "single",
+                path: "{{url_for('static',filename='editormd/lib/')}}",
+                imageUpload: true,
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: "{{url_for('uploadimages')}}",
+                saveHTMLToTextarea: true, //保存html格式文本
+                // 设置markdown功能栏
+                toolbarIcons: function () {
+                    return ["undo", "redo", "|", "bold", "hr", "italic", "del", "|", "h1", "h2", "h3", "h4", "h5", "|", "image", "link", "|", "search"]
+                },
+            });
+        })
+    </script>
+</body>
+
+</html>

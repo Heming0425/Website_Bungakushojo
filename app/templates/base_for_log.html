@@ -5,12 +5,12 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>登陆</title>
+	<title>登陆/注册「文学少女」主题站</title>
 	<link rel="shortcut icon" href="#" />
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/normalize.css')}}" />
 	<link rel="stylesheet prefetch" href="{{url_for('static',filename='css/foundation.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/styles.css')}}">
-
+	<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
 	{% with messages = get_flashed_messages() %}
 	{% if messages %}
 	{% for message in messages %}

@@ -1,9 +1,11 @@
 import os
+import random
 from datetime import datetime
 
 from flask import flash, get_flashed_messages, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
+from flask import jsonify, Response
 
 # 导入数据库
 from app import app
@@ -82,8 +84,8 @@ def registered():
 '''
 
 
-@app.route('/')
-@app.route('/index')  # 主页
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])  # 主页
 def index():
 
     # 验证session
@@ -94,9 +96,10 @@ def index():
         return render_template('login.html', flash=flash)
 
     # 轮播设置
+    post_id = [1]  # 轮播文章选择
     post_bgs = []
     post_bgs_author = []
-    for i in range(1,5):
+    for i in post_id:
         post_bg = Blog_info.query.filter_by(id=i).first()
         post_bg_author = User_info.query.filter_by(uid=post_bg.user_id).first()
         post_bgs.append(post_bg)
@@ -104,16 +107,17 @@ def index():
     posts = zip(post_bgs, post_bgs_author)
 
     # 文章展示
+    blog_ids = [1, 2, 3]
     post_blogs = []
     post_blogs_author = []
-    for i in range(1,6):
+    for i in blog_ids:
         post_blog = Blog_info.query.filter_by(id=i).first()
         author = User_info.query.filter_by(uid=post_blog.user_id).first()
         post_blogs.append(post_blog)
         post_blogs_author.append(author)
     blog_zip = zip(post_blogs, post_blogs_author)
 
-    return render_template('index.html', posts=posts, blog_zip=blog_zip)
+    return render_template('index.html', posts=posts, blog_zip=blog_zip,flash=flash)
 
 
 '''
@@ -172,66 +176,6 @@ def view(blog_id):
         return render_template('single-audio.html', blog=blog_data, comment_number=comment_number, comment_zip=comment_zip, author=author_data, view=view)
 
 
-@app.route('/upload', methods=['POST', 'GET'])  # 文章提交页面
-def user_upload():
-
-    # 验证session
-    try:
-        uid = session['uid']
-    except:
-        flash('请先登陆')
-        return render_template('login.html', flash=flash)
-
-    if request.method == 'POST':
-
-        # 必要信息获取
-        title = request.form.get('title')
-        text = request.form.get('text')
-        imag = request.files['imag']
-        upload_time = datetime.now()
-        blog_type = 1
-
-        # 上传基本路径
-        basepath = os.path.dirname(__file__)
-
-        # 上传图片
-        upload_path_imag = os.path.join(
-            basepath, 'static/upload/images', secure_filename(imag.filename))  # 文件存入服务器
-        imag.save(upload_path_imag)
-        upload_path_imag = os.path.join(
-            'upload/images', secure_filename(imag.filename))  # 路径存入数据库
-
-        # 是否上传音乐
-        try:
-            audio = request.files['audio']
-            upload_path_mp3 = os.path.join(
-                basepath, 'static/upload/audio', secure_filename(audio.filename))
-            audio.save(upload_path_mp3)
-            upload_path_mp3 = os.path.join(
-                'upload/audio', secure_filename(audio.filename))
-            blog_type = 2
-        except:
-            upload_path_mp3 = None
-
-        blog = Blog_info(
-            title=title,
-            text=text,
-            imag=upload_path_imag,
-            audio=upload_path_mp3,
-            blog_type=blog_type,
-            upload_time=upload_time,
-            user_id=uid  # 外键指向uid
-        )
-
-        db.session.add(blog)
-        db.session.commit()
-
-        return redirect('index')
-
-    else:
-        return render_template('upload.html')
-
-
 '''
 作者信息展示页面
 '''
@@ -241,6 +185,7 @@ def user_upload():
 def author(authoruid):
 
     if request.method == 'POST':
+
         name = request.form.get('name')
         email = request.form.get('email')
         sign = request.form.get('sign')
@@ -262,6 +207,8 @@ def author(authoruid):
             'icon': upload_path_icon
         })
         db.session.commit()
+    else:
+        pass
 
     # 验证登陆
     # 验证当前用户是否匹配以显示change
@@ -280,3 +227,129 @@ def author(authoruid):
     # 验证u_data
     # 前端检验blogs
     return render_template('author_info.html', author=u_data, blogs=blogs, change=change)
+
+
+'''
+检索功能
+'''
+
+
+@app.route('/index/search')
+def search():  # 标题关键词检索
+    
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+    
+    search_info = request.args.get('search_info')
+    search_data = Blog_info.query.filter(
+        Blog_info.title.like('%' + search_info + '%')).all()
+    
+    try:
+        search_authors = []
+        for i in search_data:
+            author = User_info.query.filter_by(uid=i.user_id).first()
+            search_authors.append(author)
+            search_zip = zip(search_data, search_authors)
+    except:
+        pass
+    
+    if search_authors != []:
+        search_zip = zip(search_data, search_authors)
+    else:
+        flash('很抱歉，没有检索到对应的信息')
+        return redirect('index')
+    return render_template('search.html', search_zip=search_zip)
+
+
+'''
+用户markdown文章上传
+'''
+
+
+@app.route('/markdown', methods=['GET', 'POST'])
+def blog_markdown():
+
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    # markdown编辑
+    if request.method == 'POST':
+
+        # 获取基本信息
+        title = request.form.get('title')
+        blog_markdown = request.form.get('basic-editormd-html-code')
+        upload_time = datetime.now()
+        blog_type = 1
+
+        # imag
+        imag = request.files['imag']
+        fname = os.path.splitext(imag.filename)[1]
+        basepath = os.path.dirname(__file__)
+        filename = datetime.now().strftime('%Y%m%d%H%M%S')+fname
+        imag.save(os.path.join(basepath, 'static/upload/images', filename))
+        imag = os.path.join('upload/images', secure_filename(filename))
+
+        # 是否上传音乐
+        try:
+            audio = request.files['audio']
+            fname = os.path.splitext(audio.filename)[1]
+            basepath = os.path.dirname(__file__)
+            filename = datetime.now().strftime('%Y%m%d%H%M%S')+fname
+            audio.save(os.path.join(basepath, 'static/upload/audio', filename))
+            audio = os.path.join('upload/audio', secure_filename(filename))
+            blog_type = 2
+        except:
+            audio = None
+
+        blog = Blog_info(
+            title=title,
+            blog_markdown=blog_markdown,
+            imag=imag,
+            audio=audio,
+            blog_type=blog_type,
+            blog_timeid=datetime.now().strftime('%Y%m%d%H%M%S'),
+            upload_time=upload_time,
+            user_id=uid
+        )
+
+        db.session.add(blog)
+        db.session.commit()
+        return redirect('index')
+    else:
+        return render_template('markdown.html')
+
+
+@app.route('/uploadimages', methods=['POST'])  # 图片上传处理 for edithormd
+def uploadimages():
+    file = request.files.get('editormd-image-file')
+    if not file:
+        res = {
+            'success': 0,
+            'message': u'文件格式异常'
+        }
+    else:
+        fname = os.path.splitext(file.filename)[1]
+        basepath = os.path.dirname(__file__)
+        filename = datetime.now().strftime('%Y%m%d%H%M%S')+fname
+        file.save(os.path.join(basepath, 'static/upload/images', filename))
+        res = {
+            'success': 1,
+            'url': url_for('.image', name=filename)
+        }
+    return jsonify(res)
+
+
+@app.route('/image/<name>')  # 编辑器显示图片处理 for editormd
+def image(name):
+    basepath = os.path.dirname(__file__)
+    with open(os.path.join(basepath, 'static/upload/images', name), 'rb') as f:
+        resp = Response(f.read(), mimetype="image/jpeg")
+    return resp
