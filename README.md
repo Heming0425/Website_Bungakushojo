@@ -1,4 +1,4 @@
-# basic_blog
+# basic_blog for bungakushojo
 
 开发者笔记  
 *加入模糊检索功能✔️  
@@ -7,7 +7,10 @@
 *对于文章上传的排版考虑引入markdown✔️  
 *文件上传优化✔️   
   
-更新版本 Version1.03  
+更新版本 Version1.04  
+*新增「bungakushojo」介绍  
+  
+历史版本 Version1.03  
 *上传文章后正确地跳转页面  
   
 历史版本 Version1.02  

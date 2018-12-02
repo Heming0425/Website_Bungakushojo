@@ -117,7 +117,7 @@ def index():
         post_blogs_author.append(author)
     blog_zip = zip(post_blogs, post_blogs_author)
 
-    return render_template('index.html', posts=posts, blog_zip=blog_zip,flash=flash)
+    return render_template('index.html', posts=posts, blog_zip=blog_zip, flash=flash)
 
 
 '''
@@ -236,18 +236,18 @@ def author(authoruid):
 
 @app.route('/index/search')
 def search():  # 标题关键词检索
-    
+
     # 验证session
     try:
         uid = session['uid']
     except:
         flash('请先登陆')
         return render_template('login.html', flash=flash)
-    
+
     search_info = request.args.get('search_info')
     search_data = Blog_info.query.filter(
         Blog_info.title.like('%' + search_info + '%')).all()
-    
+
     try:
         search_authors = []
         for i in search_data:
@@ -256,7 +256,7 @@ def search():  # 标题关键词检索
             search_zip = zip(search_data, search_authors)
     except:
         pass
-    
+
     if search_authors != []:
         search_zip = zip(search_data, search_authors)
     else:
@@ -288,7 +288,7 @@ def blog_markdown():
         blog_markdown = request.form.get('basic-editormd-html-code')
         upload_time = datetime.now()
         blog_type = 1
-        blog_timeid=datetime.now().strftime('%Y%m%d%H%M%S')
+        blog_timeid = datetime.now().strftime('%Y%m%d%H%M%S')
 
         # imag
         imag = request.files['imag']
@@ -325,7 +325,7 @@ def blog_markdown():
         db.session.commit()
 
         blog = Blog_info.query.filter_by(blog_timeid=blog_timeid).first()
-        return redirect(url_for('view',blog_id=blog.id))
+        return redirect(url_for('view', blog_id=blog.id))
     else:
         return render_template('markdown.html')
 
@@ -356,3 +356,20 @@ def image(name):
     with open(os.path.join(basepath, 'static/upload/images', name), 'rb') as f:
         resp = Response(f.read(), mimetype="image/jpeg")
     return resp
+
+
+'''
+文学少女介绍
+'''
+
+
+@app.route('/bungakushojoinfo')
+def bungakushojoinfo():
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    return render_template('info.html')
