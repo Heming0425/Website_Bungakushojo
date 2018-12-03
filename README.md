@@ -1,4 +1,4 @@
-# basic_blog for bungakushojo   
+# flask blog for bungakushojo   
   
 更新版本 Version1.05  
 *新增「文学少女」动画集  
