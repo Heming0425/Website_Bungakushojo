@@ -373,3 +373,20 @@ def bungakushojoinfo():
         return render_template('login.html', flash=flash)
 
     return render_template('info.html')
+
+
+'''
+资源库
+'''
+
+
+@app.route('/shojo/animate') #动画集
+def animate():
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    return render_template('animate.html')

@@ -1,13 +1,9 @@
-# basic_blog for bungakushojo
-
-开发者笔记  
-*加入模糊检索功能✔️  
-*更改用户修改个人信息的方式  
-*上传文章后正确地跳转页面✔️  
-*对于文章上传的排版考虑引入markdown✔️  
-*文件上传优化✔️   
+# basic_blog for bungakushojo   
   
-更新版本 Version1.04  
+更新版本 Version1.05  
+*新增「文学少女」动画集  
+  
+历史版本 Version1.04  
 *新增「bungakushojo」介绍  
   
 历史版本 Version1.03  
