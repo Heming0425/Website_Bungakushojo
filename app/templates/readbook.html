@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta charset="UTF-8">
+<title>「文学少女」{{book_data.title}}</title>
+<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
+<link rel="stylesheet" href="{{url_for('static',filename='css/read/reset.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/read/style.css')}}">
+</head>
+
+<body>
+{{book_data.read|safe}}
+<script src="{{url_for('static',filename='js/read/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/read/index.js')}}"></script>
+</body>
+</html>

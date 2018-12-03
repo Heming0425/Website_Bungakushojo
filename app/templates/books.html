@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>「文学少女」</title>
+	<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
+
+	<!--核心样式-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/book/normalize.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/book/style.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/book/bookblock.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/book/component.css')}}" />
+
+	<!--翻书特效样式-->
+	<script src="{{url_for('static',filename='js/book/modernizr.custom.js')}}"></script>
+	
+	{% for book in books %}
+	<style type="text/css">
+		.no-csstransforms3d .book[data-book="book-{{book.id}}"],
+		.no-js .book[data-book="book-{{book.id}}"],
+		.book[data-book="book-{{book.id}}"] .front {
+			background: url({{url_for('static',filename=book.imag)}});
+			background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1) 0%, rgba(211, 211, 211, 0.1) 5%, rgba(255, 255, 255, 0.15) 5%, rgba(255, 255, 255, 0.1) 9%, rgba(0, 0, 0, 0.01) 100%), url({{url_for('static',filename=book.imag)}}), #FFFFFF;
+			background: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(211, 211, 211, 0.1) 5%, rgba(255, 255, 255, 0.15) 5%, rgba(255, 255, 255, 0.1) 9%, rgba(0, 0, 0, 0.01) 100%), url({{url_for('static',filename=book.imag)}}), #FFFFFF;
+		}
+
+		.book[data-book="book-{{book.id}}"] .inner {
+			border-color: #FFFFFF
+		}
+
+		.book[data-book="book-{{book.id}}"] .cover::before {
+			background: url({{url_for('static',filename=book.imagf)}});
+			background: -webkit-linear-gradient(left, transparent 0%, rgba(0, 0, 0, 0.01) 1%, rgba(0, 0, 0, 0.1) 50%, transparent 100%), url({{url_for('static',filename=book.imagf)}}), #FFFFFF;
+			background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.01) 1%, rgba(0, 0, 0, 0.1) 50%, transparent 100%), url({{url_for('static',filename=book.imagf)}}), #FFFFFF;
+		}
+
+		#book-{{book.id}} { border-color: #FFFFFF }
+	</style>
+	{% endfor %}
+</head>
+
+<body>
+
+	<div class="book-top">
+		<p>あなたが見たように、「文学少女」です</p>
+	</div>
+
+	<!--书架-->
+	<div id="scroll-wrap" class="container">
+		<div class="main">
+			<div id="bookshelf" class="bookshelf">
+				{% for book in books %}
+				<figure>
+					<div class="book" data-book="book-{{book.id}}"></div>
+					<div class="buttons"><a href="{{url_for('readbook',bookid=book.id)}}">开始阅读</a><a href="#">相关</a></div>
+					<figcaption>
+						<h2>{{book.title}}<span>{{book.num}}</span></h2>
+					</figcaption>
+					<div class="details">
+						<ul>
+							<li>{{book.text|safe}}</li>
+							<li>{{book.time}}</li>
+							<li>{{book.bottom}}</li>
+						</ul>
+					</div>
+				</figure>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="{{url_for('static',filename='js/book/bookblock.min.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='js/book/classie.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='js/book/bookshelf.js')}}"></script>
+
+</body>
+
+</html>

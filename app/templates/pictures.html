@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ch" class="no-js">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>文学少女的画廊</title>
+	<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/picture/normalize.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.3.0/css/font-awesome.min.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/picture/demo.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/picture/style.css')}}" />
+	<script src="{{url_for('static',filename='js/picture/modernizr-custom.js')}}"></script>
+</head>
+
+<body class="demo-2">
+	<div class="container">
+		<header class="codrops-header">
+			<h1 style="color:#73746ac4;font-family:Abril Fatface, serif;">「文学少女」的画廊</h1>
+		</header>
+		<div class="content">
+			<div class="grid">
+				{% for picture in pictures %}
+				<div class="grid__item" data-size="1280x853">
+					<a href="{{url_for('static',filename=picture.imag)}}" class="img-wrap"><img src="{{url_for('static',filename=picture.imag)}}" />
+						<div class="description description--grid">
+							<p>{{picture.text|safe}}<em>&mdash; {{picture.name}}</em></p>
+							<div class="details">
+								<ul>
+									<li><i class="icon icon-camera"></i><span>{{picture.ad}}</span></li>
+								</ul>
+							</div>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+
+
+			</div>
+			<!-- /grid -->
+			<div class="preview">
+				<button class="action action--close"><i class="fa fa-times"></i><span class="text-hidden">Close</span></button>
+				<div class="description description--preview"></div>
+			</div>
+			<!-- /preview -->
+		</div>
+
+
+	</div>
+	<!-- /container -->
+	<script src="{{url_for('static',filename='js/picture/imagesloaded.pkgd.min.js')}}"></script>
+	<script src="{{url_for('static',filename='js/picture/masonry.pkgd.min.js')}}"></script>
+	<script src="{{url_for('static',filename='js/picture/classie.js')}}"></script>
+	<script src="{{url_for('static',filename='js/picture/main.js')}}"></script>
+	<script>
+		(function () {
+			var support = { transitions: Modernizr.csstransitions },
+				// transition end event name
+				transEndEventNames = { 'WebkitTransition': 'webkitTransitionEnd', 'MozTransition': 'transitionend', 'OTransition': 'oTransitionEnd', 'msTransition': 'MSTransitionEnd', 'transition': 'transitionend' },
+				transEndEventName = transEndEventNames[Modernizr.prefixed('transition')],
+				onEndTransition = function (el, callback) {
+					var onEndCallbackFn = function (ev) {
+						if (support.transitions) {
+							if (ev.target != this) return;
+							this.removeEventListener(transEndEventName, onEndCallbackFn);
+						}
+						if (callback && typeof callback === 'function') { callback.call(this); }
+					};
+					if (support.transitions) {
+						el.addEventListener(transEndEventName, onEndCallbackFn);
+					}
+					else {
+						onEndCallbackFn();
+					}
+				};
+
+			new GridFx(document.querySelector('.grid'), {
+				imgPosition: {
+					x: -0.5,
+					y: 1
+				},
+				onOpenItem: function (instance, item) {
+					instance.items.forEach(function (el) {
+						if (item != el) {
+							var delay = Math.floor(Math.random() * 50);
+							el.style.WebkitTransition = 'opacity .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1), -webkit-transform .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1)';
+							el.style.transition = 'opacity .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1), transform .5s ' + delay + 'ms cubic-bezier(.7,0,.3,1)';
+							el.style.WebkitTransform = 'scale3d(0.1,0.1,1)';
+							el.style.transform = 'scale3d(0.1,0.1,1)';
+							el.style.opacity = 0;
+						}
+					});
+				},
+				onCloseItem: function (instance, item) {
+					instance.items.forEach(function (el) {
+						if (item != el) {
+							el.style.WebkitTransition = 'opacity .4s, -webkit-transform .4s';
+							el.style.transition = 'opacity .4s, transform .4s';
+							el.style.WebkitTransform = 'scale3d(1,1,1)';
+							el.style.transform = 'scale3d(1,1,1)';
+							el.style.opacity = 1;
+
+							onEndTransition(el, function () {
+								el.style.transition = 'none';
+								el.style.WebkitTransform = 'none';
+							});
+						}
+					});
+				}
+			});
+		})();
+	</script>
+</body>
+
+</html>

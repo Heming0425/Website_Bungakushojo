@@ -1,6 +1,9 @@
 # basic_blog for bungakushojo   
   
-更新版本 Version1.05  
+更新版本 Version1.06  
+*新增「文学少女」小说集  
+  
+历史版本 Version1.05  
 *新增「文学少女」动画集  
   
 历史版本 Version1.04  

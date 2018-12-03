@@ -10,7 +10,7 @@ from flask import jsonify, Response
 # 导入数据库
 from app import app
 from app import db
-from .models import User_info, Blog_info, Comment_info
+from .models import User_info, Blog_info, Comment_info, Pictures, Books
 
 '''
 登陆注册模块
@@ -380,7 +380,7 @@ def bungakushojoinfo():
 '''
 
 
-@app.route('/shojo/animate') #动画集
+@app.route('/shojo/animate')  # 动画集
 def animate():
     # 验证session
     try:
@@ -390,3 +390,59 @@ def animate():
         return render_template('login.html', flash=flash)
 
     return render_template('animate.html')
+
+
+@app.route('/shojo/pictures')  # 插画集
+def pictures():
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    pictures = Pictures.query.all()  # 获取插画集数据
+
+    return render_template('pictures.html', pictures=pictures)
+
+
+@app.route('/shojo/books')
+def shojobook():
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    return render_template('shojobook.html')
+
+
+@app.route('/shojo/books/<bookstyle>')  # 书架
+def books(bookstyle):
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    books = Books.query.filter_by(style=bookstyle).all()
+    return render_template('books.html', books=books)
+
+
+@app.route('/shojo/books/readbook/<bookid>')  # 阅读界面
+def readbook(bookid):
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    book_data = Books.query.filter_by(id=bookid).first()
+    return render_template('readbook.html', book_data=book_data)
+
+
+'''数据库建好后运行测试，之后全部改为post请求防止错误登入'''
+

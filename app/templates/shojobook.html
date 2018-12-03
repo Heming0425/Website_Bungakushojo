@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>小说集</title>	
+	<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bookh/style.css')}}" />
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bookh/component.css')}}" />
+</head>
+<body>
+	<div class="container">
+		<section class="section section--menu" id="Alonso">
+			<h1 class="section__title">あなたが見たように、「文学少女」です</h1>
+			<nav class="menu menu--alonso">
+				<ul class="menu__list">
+					<li class="menu__item menu__item--current"><a href="{{url_for('index')}}" class="menu__link">回到主页</a></li>
+					<li class="menu__item"><a href="{{url_for('books',bookstyle='正传')}}" class="menu__link">正传</a></li>
+					<li class="menu__item"><a href="{{url_for('books',bookstyle='后日谈')}}" class="menu__link">后日谈</a></li>
+					<li class="menu__item"><a href="{{url_for('books',bookstyle='短篇')}}" class="menu__link">短篇</a></li>
+					<li class="menu__item"><a href="{{url_for('books',bookstyle='番外')}}" class="menu__link">番外</a></li>
+					<li class="menu__line"></li>
+				</ul>
+			</nav>
+		</section>
+</body>
+</html>
