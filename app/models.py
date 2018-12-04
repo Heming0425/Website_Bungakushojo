@@ -121,3 +121,24 @@ class Books(db.Model):
     def __repr__(self):
         return "<books id '{}'>".format(self.id)
 
+class Music(db.Model):
+
+    __tablename__ = 'music'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    name = db.Column(db.String(225))
+    time = db.Column(db.String(225))
+    singer = db.Column(db.String(225))
+    album = db.Column(db.String(225))
+    side1 = db.Column(db.Text)
+    side2 = db.Column(db.Text)
+
+    def __init__(self,name,time,singer,album,side1,side2):
+        self.name = name
+        self.time = time
+        self.singer = singer
+        self.album = album
+        self.side1 = side1
+        self.side2 = side2
+
+    def __repr__(self):
+        return "<music id '{}'>".format(self.id)

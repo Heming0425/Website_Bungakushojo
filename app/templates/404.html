@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>404</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
+
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Dosis:400,300,500,800'>
+
+  <link rel="stylesheet" href="{{url_for('static',filename='css/404/style.css')}}">
+
+
+</head>
+
+<body>
+
+  <div class="content">
+    <canvas class="snow" id="snow"></canvas>
+    <div class="main-text">
+      <p>The page was eaten by Tooko.</p>
+      <p>页面被远子学姐吃掉啦。</p>
+      <p>このページは远子せんぱいによって食べられました。</p>
+      <a class="home-link" href="{{url_for('index')}}">Back Home</a>
+    </div>
+    <div class="ground">
+      <div class="mound">
+        <div class="mound_text">404</div>
+        <div class="mound_spade"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{url_for('static',filename='js/404/index.js')}}"></script>
+
+</body>
+
+</html>

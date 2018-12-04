@@ -5,12 +5,12 @@ from datetime import datetime
 from flask import flash, get_flashed_messages, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
-from flask import jsonify, Response
+from flask import jsonify, Response, abort
 
 # 导入数据库
 from app import app
 from app import db
-from .models import User_info, Blog_info, Comment_info, Pictures, Books
+from .models import User_info, Blog_info, Comment_info, Pictures, Books, Music
 
 '''
 登陆注册模块
@@ -127,7 +127,6 @@ def index():
 
 @app.route('/view/<blog_id>', methods=['GET', 'POST'])  # 文章详情页
 def view(blog_id):
-
     # 验证session
     try:
         uid = session['uid']
@@ -161,8 +160,12 @@ def view(blog_id):
     comment_number = len(comments)
 
     blog_data = Blog_info.query.filter_by(id=blog_id).first()  # 获取文章信息
-    author_data = User_info.query.filter_by(
-        uid=blog_data.user_id).first()  # 获取文章对应的author信息
+
+    try:
+        author_data = User_info.query.filter_by(
+            uid=blog_data.user_id).first()  # 获取文章对应的author信息
+    except:
+        abort(404)  # 404
 
     if blog_data.blog_type == 1:  # 标准文章格式
         view = {
@@ -222,6 +225,11 @@ def author(authoruid):
         change = 1
 
     u_data = User_info.query.filter_by(uid=authoruid).first()
+    if u_data:
+        pass
+    else:
+        abort(404)  # 404
+
     blogs = Blog_info.query.filter_by(user_id=authoruid).all()
 
     # 验证u_data
@@ -444,5 +452,28 @@ def readbook(bookid):
     return render_template('readbook.html', book_data=book_data)
 
 
-'''数据库建好后运行测试，之后全部改为post请求防止错误登入'''
+@app.route('/shojo/music')  # 音乐集
+def music():
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
 
+    musics = Music.query.all()
+    album = {
+        'total': len(musics)
+    }
+
+    return render_template('music.html', musics=musics, album=album)
+
+
+'''
+404
+'''
+
+
+@app.errorhandler(404)
+def page_404(er):
+    return render_template('404.html')

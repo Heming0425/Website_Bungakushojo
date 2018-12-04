@@ -1,6 +1,11 @@
 # flask blog for bungakushojo   
   
-更新版本 Version1.06  
+更新版本 Version1.07  
+*新增「文学少女」音乐集  
+*新增「文学少女」插画集  
+*新增404页面  
+  
+历史版本 Version1.06  
 *新增「文学少女」小说集  
   
 历史版本 Version1.05  
