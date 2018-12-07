@@ -104,7 +104,7 @@
         delay                : 300,            // Delay parse markdown to html, Uint : ms
         autoLoadModules      : true,           // Automatic load dependent module files
         watch                : true,
-        placeholder          : "Enjoy Markdown! coding now...",
+        placeholder          : "远子学姐的肚子空空如也啦～",
         gotoLine             : true,
         codeFold             : false,
         autoHeight           : false,

@@ -98,7 +98,7 @@ a:focus {
  *  03. typography & general theme styles - (_document-setup.scss) 
  *
  * ------------------------------------------------------------------- */
-h1, h2, h3, h4, h5, h6, .h01, .h02, .h03, .h04, .h05, .h06 {
+p h1, h2, h3, h4, h5, h6, .h01, .h02, .h03, .h04, .h05, .h06 {
 	font-family: "montserrat-bold", sans-serif;
 	color: #151515;
 	font-style: normal;
@@ -172,7 +172,6 @@ p.lead {
 em, i, strong, b {
 	font-size: 1.7rem;
 	line-height: 3rem;
-	font-style: normal;
 	font-weight: normal;
 }
 em, i {
@@ -285,6 +284,10 @@ ul {
 
 li {
 	display: list-item;
+}
+
+i, cite, em, var, address, dfn {
+    font-style: normal;
 }
 
 ol,

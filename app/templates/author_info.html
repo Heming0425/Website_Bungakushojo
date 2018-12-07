@@ -29,6 +29,7 @@
 				{% if change %}
 				<li><a href="#four">Change</a></li>
 				{% endif %}
+				<li><a href="{{url_for('index')}}">Home</a></li>
 			</ul>
 		</nav>
 	</section>
@@ -109,7 +110,7 @@
 
 		</div>
 
-		<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
 		<script src="{{url_for('static',filename='js/jquery.scrollzer.min.js')}}"></script>
 		<script src="{{url_for('static',filename='js/jquery.scrolly.min.js')}}"></script>
 		<script src="{{url_for('static',filename='js/skel.min.js')}}"></script>

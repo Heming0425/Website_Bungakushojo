@@ -96,7 +96,7 @@ def index():
         return render_template('login.html', flash=flash)
 
     # 轮播设置
-    post_id = [1]  # 轮播文章选择
+    post_id = [3, 4, 5, 6]  # 轮播文章选择
     post_bgs = []
     post_bgs_author = []
     for i in post_id:
@@ -107,7 +107,7 @@ def index():
     posts = zip(post_bgs, post_bgs_author)
 
     # 文章展示
-    blog_ids = [1, 2, 3]
+    blog_ids = [1, 8, 9, 2, 7, 10]
     post_blogs = []
     post_blogs_author = []
     for i in blog_ids:
@@ -194,21 +194,19 @@ def author(authoruid):
         sign = request.form.get('sign')
         icon = request.files['icon']
 
-        # 上传基本路径
+        fname = os.path.splitext(icon.filename)[1]
         basepath = os.path.dirname(__file__)
+        filename = datetime.now().strftime('%Y%m%d%H%M%S')+fname
+        icon.save(os.path.join(basepath, 'static/upload/icon', filename))
+        icon = os.path.join('upload/icon', secure_filename(filename))
 
-        # 上传作者头像
-        upload_path_icon = os.path.join(
-            basepath, 'static/upload/icon', secure_filename(icon.filename))  # 文件存入服务器
-        icon.save(upload_path_icon)
-        upload_path_icon = os.path.join(
-            'upload/icon', secure_filename(icon.filename))
         User_info.query.filter_by(uid=session['uid']).update({  # 更新
             'name': name,
             'email': email,
             'sign': sign,
-            'icon': upload_path_icon
+            'icon': icon
         })
+        
         db.session.commit()
     else:
         pass
