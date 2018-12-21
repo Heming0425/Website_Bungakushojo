@@ -25,27 +25,28 @@
 </head>
 
 <body>
-
-    <div class="col-md-8 offset-md-2">
-        <form enctype='multipart/form-data' id='blog_markdown' method='POST' action="">
-            <br />
-            <div>
-                <input name='title' type="text" required='required' placeholder="请在这里键入您的标题" class="form-control">
-            </div>
-            <br />
-            <div id="basic-editormd"></div>
-            <div>
-                <p>请在这里选择您的封面「required」</p>
-                <input name='imag' class="file" type="file" required='required' multiple data-min-file-count="1">
-            </div>
-            <br />
-            <div>
-                <p>请在这里选择您的背景音乐「suggest」</p>
-                <input name='audio' class="file" type="file" multiple data-min-file-count="1">
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <form enctype='multipart/form-data' id='blog_markdown' method='POST' action="">
+                <br />
+                <div>
+                    <input name='title' type="text" required='required' placeholder="请在这里键入您的标题" class="form-control">
+                </div>
+                <br />
+                <div id="basic-editormd"></div>
+                <div>
+                    <p>请在这里选择您的封面「required」</p>
+                    <input name='imag' class="file" type="file" required='required' multiple data-min-file-count="1">
+                </div>
+                <br />
+                <div>
+                    <p>请在这里选择您的背景音乐「suggest」</p>
+                    <input name='audio' class="file" type="file" multiple data-min-file-count="1">
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
 
 

@@ -6,6 +6,7 @@ from flask import flash, get_flashed_messages, redirect, render_template, reques
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from flask import jsonify, Response, abort
+import math
 
 # 导入数据库
 from app import app
@@ -96,18 +97,39 @@ def index():
         return render_template('login.html', flash=flash)
 
     # 轮播设置
-    post_id = [3, 4, 5, 6]  # 轮播文章选择
     post_bgs = []
     post_bgs_author = []
+    is_offical = []
+
+    # 海报post
+    post_bgs.append('posts/20181221.jpg')
+    post_a = {
+        'title': '「三题故事」写作指南',
+        'url': 'mdwrite'
+    }
+    post_bgs_author.append(post_a)
+    is_offical.append(1)
+    post_bgs.append('posts/20181221.jpg')
+    post_a = {
+        'title': '「文学少女」资料站',
+        'url': 'bgksdata'
+    }
+    post_bgs_author.append(post_a)
+    is_offical.append(1)
+
+    post_id = [3, 4, 5, 6]  # 轮播文章选择
+    # 推荐文章post
     for i in post_id:
         post_bg = Blog_info.query.filter_by(id=i).first()
         post_bg_author = User_info.query.filter_by(uid=post_bg.user_id).first()
         post_bgs.append(post_bg)
         post_bgs_author.append(post_bg_author)
-    posts = zip(post_bgs, post_bgs_author)
+        is_offical.append(0)
+
+    posts = zip(post_bgs, post_bgs_author, is_offical)
 
     # 文章展示
-    blog_ids = [1, 8, 9, 2, 7, 10]
+    blog_ids = [1, 8, 9, 2, 7, 10, 3]
     post_blogs = []
     post_blogs_author = []
     for i in blog_ids:
@@ -117,7 +139,11 @@ def index():
         post_blogs_author.append(author)
     blog_zip = zip(post_blogs, post_blogs_author)
 
-    return render_template('index.html', posts=posts, blog_zip=blog_zip, flash=flash)
+    pages = len(Blog_info.query.all())
+    page = math.ceil(pages/6)
+    page = range(2, page+2)
+
+    return render_template('index.html', posts=posts, blog_zip=blog_zip, flash=flash, page=page)
 
 
 '''
@@ -167,6 +193,11 @@ def view(blog_id):
     except:
         abort(404)  # 404
 
+    # 阅读量变更
+    viewpre = Blog_info.query.filter_by(id=blog_id).first().view
+    Blog_info.query.filter_by(id=blog_id).update({'view': viewpre+1})
+    db.session.commit()
+
     if blog_data.blog_type == 1:  # 标准文章格式
         view = {
             'style': 'format-standard'
@@ -206,7 +237,7 @@ def author(authoruid):
             'sign': sign,
             'icon': icon
         })
-        
+
         db.session.commit()
     else:
         pass
@@ -240,7 +271,7 @@ def author(authoruid):
 '''
 
 
-@app.route('/index/search')
+@app.route('/index/search', methods=['GET', 'POST'])
 def search():  # 标题关键词检索
 
     # 验证session
@@ -251,15 +282,48 @@ def search():  # 标题关键词检索
         return render_template('login.html', flash=flash)
 
     search_info = request.args.get('search_info')
+
+    try:
+        search_info = int(search_info)
+        pagenum = {
+            'page': search_info
+        }
+        low = 6*(search_info-1)
+        up = 6*search_info
+        search_data = []
+        for i in range(low, up):
+            try:
+                blog = Blog_info.query.filter_by(id=i).first()
+                if blog:
+                    search_data.append(blog)
+            except:
+                pass
+        search_authors = []
+        for i in search_data:
+            author = User_info.query.filter_by(uid=i.user_id).first()
+            search_authors.append(author)
+            search_zip = zip(search_data, search_authors)
+
+        blog_num = len(Blog_info.query.all())
+        page_num = math.ceil(blog_num/6)
+        page_range = range(2, page_num+2)
+        a_page_num = len(page_range)+1
+        page = {
+            'page': page_range,
+            'npage': a_page_num
+        }
+        return render_template('indexpage.html', search_zip=search_zip, pagenum=pagenum, page=page)
+    except:
+        pass
+
     search_data = Blog_info.query.filter(
-        Blog_info.title.like('%' + search_info + '%')).all()
+        Blog_info.title.like('%' + str(search_info) + '%')).all()
 
     try:
         search_authors = []
         for i in search_data:
             author = User_info.query.filter_by(uid=i.user_id).first()
             search_authors.append(author)
-            search_zip = zip(search_data, search_authors)
     except:
         pass
 
@@ -324,7 +388,8 @@ def blog_markdown():
             blog_type=blog_type,
             blog_timeid=blog_timeid,
             upload_time=upload_time,
-            user_id=uid
+            user_id=uid,
+            view=0
         )
 
         db.session.add(blog)
@@ -475,3 +540,32 @@ def music():
 @app.errorhandler(404)
 def page_404(er):
     return render_template('404.html')
+
+
+'''
+POST
+'''
+
+
+@app.route('/bungakushojodata')  # 资料库
+def bgksdata():
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    return render_template('assetdata.html')
+
+
+@app.route('/markdowndata')  # 三题故事写作说明
+def mdwrite():
+    # 验证session
+    try:
+        uid = session['uid']
+    except:
+        flash('请先登陆')
+        return render_template('login.html', flash=flash)
+
+    return render_template('mdwrite.html')

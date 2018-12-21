@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<section id="bricks">
+
+    <div class="row masonry">
+
+        <!-- brick-wrapper -->
+        <div class="bricks-wrapper">
+
+            <div class="grid-sizer"></div>
+            {% for blog_data,user_data in search_zip %}
+            {% if blog_data.blog_type == 1 %}
+            <article class="brick entry format-standard animate-this">
+                {% else %}
+                <article class="brick entry format-audio animate-this">
+                    {% endif %}
+                    <div class="entry-thumb">
+                        <a href="{{url_for('view',blog_id=blog_data.id)}}" class="thumb-link">
+                            <img src="{{url_for('static',filename=blog_data.imag)}}" alt="building">
+                        </a>
+                        {% if blog_data.blog_type == 2 %}
+                        <!--音乐-->
+                        <div class="audio-wrap">
+                            <audio id="player" src="{{url_for('static',filename=blog_data.audio)}}" width="100%" height="42"
+                                controls="controls"></audio>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="entry-text">
+                        <div class="entry-header">
+
+                            <div class="entry-meta">
+                                <span class="cat-links">
+                                    {{blog_data.upload_time}}
+                                    <a href="{{url_for('author',authoruid=user_data.uid)}}">{{user_data.name}}&nbsp; 阅读 {{blog_data.view}}</a>
+                                </span>
+                            </div>
+
+                            <h1 class="entry-title"><a href="{{url_for('view',blog_id=blog_data.id)}}">{{blog_data.title}}</a></h1>
+                            <p>{{blog_data.blog_markdown | safe | truncate(length=75)}}</p>
+
+                        </div>
+                    </div>
+
+                </article> <!-- 文章结束 -->
+
+                {% endfor %}
+
+
+
+
+        </div>
+        <!--文章页面结束-->
+
+    </div>
+
+    <div class="row">
+
+        <nav class="pagination">
+            {% if pagenum.page == 2 %}
+            <a href="{{url_for('index')}}" class="page-numbers prev">Prev</a>
+            {% else %}
+            <a href="{{url_for('search',search_info=pagenum.page-1)}}" class="page-numbers prev">Prev</a>
+            {% endif %}
+
+
+            <a href="{{url_for('index')}}" class="page-numbers">1</a>
+            {% for i in page.page %}
+            <a href="{{url_for('search',search_info=i)}}" class="page-numbers" id='{{i}}'>{{i}}</a>
+            {% endfor %}
+
+            {% if pagenum.page == page.npage %}
+            <span class="page-numbers next inactive">Next</span>
+            {% else %}
+            <a href="{{url_for('search',search_info=pagenum.page+1)}}" class="page-numbers next">Next</a>
+            {% endif %}
+        </nav>
+
+    </div>
+</section>
+<script type="text/javascript">
+    document.getElementById("{{pagenum.page}}").className += ' current';
+</script>
+{% endblock %}

@@ -41,8 +41,9 @@ class Blog_info(db.Model):  # 博客信息表
     upload_time = db.Column(db.DateTime())
     blog_timeid = db.Column(db.String(225))
     user_id = db.Column(db.String(225), db.ForeignKey('user_info.uid'))
+    view = db.Column(db.Integer)
 
-    def __init__(self, title, blog_markdown, imag, audio, blog_type, upload_time, blog_timeid, user_id):
+    def __init__(self, title, blog_markdown, imag, audio, blog_type, upload_time, blog_timeid, user_id, view):
         self.title = title
         self.blog_markdown = blog_markdown
         self.imag = imag
@@ -51,6 +52,7 @@ class Blog_info(db.Model):  # 博客信息表
         self.user_id = user_id
         self.upload_time = upload_time
         self.blog_timeid = blog_timeid
+        self.view = view
 
     def __repr__(self):
         return "<blog id '{}'>".format(self.id)

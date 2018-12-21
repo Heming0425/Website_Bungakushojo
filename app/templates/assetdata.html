@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>「文学少女」资料库</title>
+		<link rel="shortcut icon" href="{{url_for('static',filename='images/shojo.ico')}}" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{{url_for('static',filename='assets/css/main.css')}}" />
+	</head>
+	<body>
+
+			<div id="wrapper" class="divided">
+
+					<section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
+						<div class="content">
+							<p class="major">「文学少女」资料库收录了有关「文学少女系列」的相关小说、插画、音乐与动画。<br/><br/>因「文学少女」的衍生作品过多，部分未收录或收录不全还请见谅。<br/><br/>本站建议的鉴赏顺序是小说、插画、音乐、动画。</p>
+	
+						</div>
+						<div class="image">
+							<img src="{{url_for('static',filename='images/assets/1.jpg')}}" alt="" />
+						</div>
+					</section>
+
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
+						<div class="content">
+							<h2>小说集</h2>
+							<p>收录了「文学少女」的正传、后日谈、短篇和番外。</p>
+							<ul class="actions vertical">
+								<li><a href="{{url_for('shojobook')}}" class="button">点心时间</a></li>
+							</ul>
+						</div>
+						<div class="image">
+							<img src="{{url_for('static',filename='images/assets/2.jpg')}}" alt="" />
+						</div>
+					</section>
+
+				<!-- Three -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2>插画集</h2>
+							<p>收录了「文学少女」追想画廊插画集中的所有插画内容。</p>
+							<ul class="actions vertical">
+								<li><a href="{{url_for('pictures')}}" class="button">点心时间</a></li>
+							</ul>
+						</div>
+						<div class="image">
+							<img src="{{url_for('static',filename='images/assets/3.jpg')}}" alt="" />
+						</div>
+					</section>
+
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
+						<div class="content">
+							<h2>音乐集</h2>
+							<p>收录了「文学少女」在剧场版、OVA中的所有已发行专辑的音乐。</p>
+							<ul class="actions vertical">
+								<li><a href="{{url_for('music')}}" class="button">点心时间</a></li>
+							</ul>
+						</div>
+						<div class="image">
+							<img src="{{url_for('static',filename='images/assets/4.jpg')}}" alt="" />
+						</div>
+					</section>
+
+
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2>动画集</h2>
+							<p>收录了「文学少女」的剧场版与OVA。</p>
+							<ul class="actions vertical">
+								<li><a href="{{url_for('animate')}}" class="button">点心时间</a></li>
+							</ul>
+						</div>
+						<div class="image">
+							<img src="{{url_for('static',filename='images/assets/5.jpg')}}" alt="" />
+						</div>
+					</section>
+
+					<footer class="wrapper style1 align-center">
+						<div class="inner">
+							<p>あなたが見たように、「文学少女」です。</p>
+						</div>
+					</footer>
+
+			</div>
+
+	</body>
+</html>

@@ -16,17 +16,17 @@
 						<ul class="slides">
 
 							<!--滚动页面-->
-							{% for post_bg,post_author in posts %}
+							{% for post_bg,post_author,is_offical in posts %}
 							<li>
 								<div class="featured-post-slide">
 
 									<!--设置图片-->
+									{% if is_offical == 0 %}
 									<div class="post-background" style="background-image:url({{url_for('static',filename=post_bg.imag)}});"></div>
 
 									<div class="overlay"></div>
 
 									<div class="post-content">
-
 
 										<!--文本区域-->
 										<ul class="entry-meta">
@@ -36,11 +36,25 @@
 										<h1 class="slide-title"><a href="{{url_for('view',blog_id=post_bg.id)}}" title="">{{post_bg.title}}</a></h1>
 
 									</div>
+									{% else %}
+									<div class="post-background" style="background-image:url({{url_for('static',filename=post_bg)}});"></div>
+
+									<div class="overlay"></div>
+
+									<div class="post-content">
+
+										<!--文本区域-->
+										<ul class="entry-meta">
+											<li><a href="{{url_for(post_author.url)}}" title="">点击查看详情</a></li>
+											<li></li>
+										</ul>
+										<h1 class="slide-title">{{post_author.title}}</h1>
+
+									</div>
+									{% endif %}
 								</div>
 							</li>
 							{% endfor%}
-
-
 						</ul>
 					</div>
 				</div>
@@ -50,45 +64,41 @@
 
 			{% if blog_data.blog_type == 1 %}
 			<article class="brick entry format-standard animate-this">
-			{% else %}
-			<article class="brick entry format-audio animate-this">
-			{% endif %}
-				<div class="entry-thumb">
-					<a href="{{url_for('view',blog_id=blog_data.id)}}" class="thumb-link">
-						<img src="{{url_for('static',filename=blog_data.imag)}}" alt="building">
-					</a>
-					{% if blog_data.blog_type == 2 %}
-					<!--音乐-->
-					<div class="audio-wrap">
-						<audio id="player" src="{{url_for('static',filename=blog_data.audio)}}" width="100%" height="42" controls="controls"></audio>
-					</div>
+				{% else %}
+				<article class="brick entry format-audio animate-this">
 					{% endif %}
-				</div>
-
-				<div class="entry-text">
-					<div class="entry-header">
-
-						<div class="entry-meta">
-							<span class="cat-links">
-								{{blog_data.upload_time}}
-								<a href="{{url_for('author',authoruid=user_data.uid)}}">{{user_data.name}}</a>
-							</span>
+					<div class="entry-thumb">
+						<a href="{{url_for('view',blog_id=blog_data.id)}}" class="thumb-link">
+							<img src="{{url_for('static',filename=blog_data.imag)}}" alt="building">
+						</a>
+						{% if blog_data.blog_type == 2 %}
+						<!--音乐-->
+						<div class="audio-wrap">
+							<audio id="player" src="{{url_for('static',filename=blog_data.audio)}}" width="100%" height="42" controls="controls"></audio>
 						</div>
-
-						<h1 class="entry-title"><a href="{{url_for('view',blog_id=blog_data.id)}}">{{blog_data.title}}</a></h1>
-						<p>{{blog_data.blog_markdown | safe | truncate(length=75)}}</p>
-
+						{% endif %}
 					</div>
-					<!--
-					<div class="entry-excerpt">
-						阅读 200 &nbsp;&nbsp;评论 3&nbsp;&nbsp;点赞 3
-					</div>
-				-->
-				</div>
 
-			</article> <!-- 文章结束 -->
+					<div class="entry-text">
+						<div class="entry-header">
+
+							<div class="entry-meta">
+								<span class="cat-links">
+									{{blog_data.upload_time}}
+									<a href="{{url_for('author',authoruid=user_data.uid)}}">{{user_data.name}}&nbsp; 阅读 {{blog_data.view}}</a>
+								</span>
+							</div>
+
+							<h1 class="entry-title"><a href="{{url_for('view',blog_id=blog_data.id)}}">{{blog_data.title}}</a></h1>
+							<p>{{blog_data.blog_markdown | safe | truncate(length=75)}}</p>
+
+						</div>
 			
-			{% endfor %}
+					</div>
+
+				</article> <!-- 文章结束 -->
+
+				{% endfor %}
 		</div>
 		<!--文章页面结束-->
 
@@ -114,7 +124,17 @@
 	</div>
 	-->
 
+	<div class="row">
 
+		<nav class="pagination">
+			<span class="page-numbers prev inactive">Prev</span>
+			<a href="{{url_for('index')}}" class="page-numbers current">1</a>
+			{% for i in page %}
+			<a href="{{url_for('search',search_info=i)}}" class="page-numbers" id='{{i}}'>{{i}}</a>
+			{% endfor %}
+			<a href="{{url_for('search',search_info=2)}}" class="page-numbers next">Next</a>
+		</nav>
+	</div>
 </section>
 
 {% endblock %}

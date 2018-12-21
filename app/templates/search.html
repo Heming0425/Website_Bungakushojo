@@ -34,7 +34,7 @@
                             <div class="entry-meta">
                                 <span class="cat-links">
                                     {{blog_data.upload_time}}
-                                    <a href="{{url_for('author',authoruid=user_data.uid)}}">{{user_data.name}}</a>
+                                    <a href="{{url_for('author',authoruid=user_data.uid)}}">{{user_data.name}}&nbsp; 阅读 {{blog_data.view}}</a>
                                 </span>
                             </div>
 
@@ -42,11 +42,7 @@
                             <p>{{blog_data.blog_markdown | safe | truncate(length=75)}}</p>
 
                         </div>
-                        <!--
-                        <div class="entry-excerpt">
-                            阅读 200 &nbsp;&nbsp;评论 3&nbsp;&nbsp;点赞 3
-                        </div>
-                    -->
+  
                     </div>
 
                 </article> <!-- 文章结束 -->

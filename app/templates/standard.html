@@ -21,18 +21,15 @@
 
 					<ul class="entry-meta">
 						<li class="date">{{blog.upload_time}}</li>
-						<li class="cat"><a href="{{url_for('author',authoruid=author.uid)}}">{{author.name}}</a></li>
+						<li class="cat"><a href="{{url_for('author',authoruid=author.uid)}}">{{author.name}} &nbsp; 阅读 {{blog.view}}</a></li>	
 					</ul>
 
 					<!--markdown-->
 					{{blog.blog_markdown|safe}}
 			
 
-					<!--
-					<p class="tags">
-						阅读 {{blog.view}} &nbsp;&nbsp;评论 {{blog.comment}}&nbsp;&nbsp;点赞 {{blog.like}}
-					</p>
-				-->
+				
+				
 
 					<div class="author-profile">
 						<!--作者头像-->
