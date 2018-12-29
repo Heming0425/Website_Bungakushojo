@@ -25,14 +25,7 @@
 <div align=center><p>文学少女插画集<p/><div>
 <div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/music.png" /></div>  
 <div align=center><p>文学少女音乐集<p/><div>
-<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/animate.png" /></div>  
-<div align=center><p>文学少女动画集<p/><div>
-<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/single_page.png" /></div>  
-<div align=center><p>三题故事单页<p/><div>
----
-
-
-
+   
 ### 开发笔记
 ---  
 * 历史版本 Version1.08  
