@@ -141,9 +141,11 @@ def index():
     blog_zip = zip(post_blogs, post_blogs_author)
 
     pages = len(Blog_info.query.all())
-    page = math.ceil(pages/6)
-    page = range(2, page+2)
-
+    page = math.floor(pages/6)
+    if pages % 6 == 0:
+        page = range(2, page+1)
+    else:
+        page = range(2, page+2)
     return render_template('index.html', posts=posts, blog_zip=blog_zip, flash=flash, page=page)
 
 
@@ -306,8 +308,11 @@ def search():  # 标题关键词检索
             search_zip = zip(search_data, search_authors)
 
         blog_num = len(Blog_info.query.all())
-        page_num = math.ceil(blog_num/6)
-        page_range = range(2, page_num+2)
+        page = math.floor(pages/6)
+        if pages % 6 == 0:
+            page = range(2, page+1)
+        else:
+            page = range(2, page+2)
         a_page_num = len(page_range)+1
         page = {
             'page': page_range,
