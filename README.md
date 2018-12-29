@@ -51,11 +51,13 @@
 
 ### 网站预览  
 ---  
-<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/homepage.png" /></div>  
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/homepage.jpeg" /></div>  
 <div align=center><p>文学少女主页<p/><div>
-<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/book.png" /></div>  
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/book.jpeg" /></div>  
 <div align=center><p>文学少女小说集<p/></div>
-<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/picture.png" /></div>  
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/picture.jpeg" /></div>  
 <div align=center><p>文学少女插画集<p/></div>
-<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/music.png" /></div>  
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/music.jpeg" /></div>  
 <div align=center><p>文学少女音乐集<p/></div>
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/animate.jpeg" /></div>  
+<div align=center><p>文学少女动画集<p/></div>
