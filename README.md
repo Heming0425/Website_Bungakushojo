@@ -1,4 +1,4 @@
-项目简介
+### 项目简介
 ---
 <div align=center><img width="600" height="400" src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/header.jpg" /></div>  
         
@@ -7,6 +7,7 @@
 * 我并非网页设计或者相关专业的学生，这门课程作业只是要求我们简单建设一个网站，因此该网站在各方面可能存在着一些缺陷，还请各位大佬见谅；  
 * 一部分网页的静态模板并非我自己设计，而是使用了来自[Codrops](https://tympanus.net/codrops/)的模板；  
 * 主题站分为两个核心内容板块——资料站与三题故事分享站。之所以这么设计，是因为我将主题站定位为“为大家展现文学少女的美好”与“能够分享与写作三题故事融入文学少女”的平台。    
+* **model_data**是数据库备份文件，若您希望复现整个网站，不要忘记将数据库迁移至您的服务器或者本地电脑。  
 
 >*资料站*  
 >>资料站主要收录了《文学少女系列》相关的小说、插画、音乐和动画。  
@@ -14,12 +15,26 @@
 >*三题故事分享站*  
 >>三题故事分享站提供了Markdown文章写作和分享的功能。  
    
+### 网站预览  
+---  
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/homepage.png" /></div>  
+<div align=center><p>文学少女主页<p/><div>
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/book.png" /></div>  
+<div align=center><p>文学少女小说集<p/><div>
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/picture.png" /></div>  
+<div align=center><p>文学少女插画集<p/><div>
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/music.png" /></div>  
+<div align=center><p>文学少女音乐集<p/><div>
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/animate.png" /></div>  
+<div align=center><p>文学少女动画集<p/><div>
+<div align=center><img width="600"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/single_page.png" /></div>  
+<div align=center><p>三题故事单页<p/><div>
 ---
-*preivew*文件夹是网页的预览图片  
-*model_data*是数据库备份文件  
 
----
-  
+
+
+### 开发笔记
+---  
 * 历史版本 Version1.08  
 *加入了阅读量提示  
 *加入了分页功能  
