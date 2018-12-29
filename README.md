@@ -1,5 +1,3 @@
-# flask blog for bungakushojo   
-  
 历史版本 Version1.08  
 *加入了阅读量提示  
 *加入了分页功能  
