@@ -13,6 +13,7 @@ from app import app
 from app import db
 from .models import User_info, Blog_info, Comment_info, Pictures, Books, Music
 
+
 '''
 登陆注册模块
 '''
@@ -109,7 +110,7 @@ def index():
     }
     post_bgs_author.append(post_a)
     is_offical.append(1)
-    post_bgs.append('posts/20181221.jpg')
+    post_bgs.append('posts/20181222.jpg')
     post_a = {
         'title': '「文学少女」资料站',
         'url': 'bgksdata'
