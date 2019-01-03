@@ -91,11 +91,11 @@ def registered():
 def index():
 
     # 验证session
-    try:
-        uid = session['uid']
-    except:
-        flash('请先登陆')
-        return render_template('login.html', flash=flash)
+    #try:
+    #    uid = session['uid']
+    #except:
+    #    flash('请先登陆')
+    #    return render_template('login.html', flash=flash)
 
     # 轮播设置
     post_bgs = []
@@ -556,11 +556,11 @@ POST
 @app.route('/bungakushojodata')  # 资料库
 def bgksdata():
     # 验证session
-    try:
-        uid = session['uid']
-    except:
-        flash('请先登陆')
-        return render_template('login.html', flash=flash)
+    #try:
+    #    uid = session['uid']
+    #except:
+    #    flash('请先登陆')
+    #    return render_template('login.html', flash=flash)
 
     return render_template('assetdata.html')
 
@@ -568,10 +568,10 @@ def bgksdata():
 @app.route('/markdowndata')  # 三题故事写作说明
 def mdwrite():
     # 验证session
-    try:
-        uid = session['uid']
-    except:
-        flash('请先登陆')
-        return render_template('login.html', flash=flash)
+    #try:
+    #    uid = session['uid']
+    #except:
+    #    flash('请先登陆')
+    #    return render_template('login.html', flash=flash)
 
     return render_template('mdwrite.html')
