@@ -1,0 +1,5 @@
+flask
+werkzeug.security
+werkzeug.utils
+flask_sqlalchemy
+flask_babelex
