@@ -57,14 +57,15 @@
 
 ### 部分预览  
 ---  
-<div align=center><img width="700"  src="https://ws1.sinaimg.cn/large/006ztiuSly1fz1lsyd0mpj30t41rle6q.jpg" /></div>    
+<div align=center><img width="700"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/homepage.jpeg" /></div>    
    
-<div align=center><img width="700"  src="https://ws1.sinaimg.cn/large/006ztiuSly1fz1lsz3ll7j318z1l87wh.jpg" /></div>    
+<div align=center><img width="700"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/book.jpeg" /></div>    
    
-<div align=center><img width="700"  src="https://ws1.sinaimg.cn/large/006ztiuSly1fz1lt050awj319i1pke82.jpg" /></div>     
+<div align=center><img width="700"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/picture.jpeg" /></div>     
    
-<div align=center><img width="700"  src="https://ws1.sinaimg.cn/large/006ztiuSly1fz1lsxtab4j319i1ptqoi.jpg" /></div>    
+<div align=center><img width="700"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/music.jpeg" /></div>    
   
-<div align=center><img width="700"  src="https://ws1.sinaimg.cn/large/006ztiuSly1fz1lsx6kslj31kw1iz4qq.jpg" /></div>    
+<div align=center><img width="700"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/animate.jpeg" /></div>    
   
-
+<div align=center><img width="700"  src="https://github.com/Heming0425/Website_Bungakushojo/blob/master/preview/markdown.png" /></div>    
+  
